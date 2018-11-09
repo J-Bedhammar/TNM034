@@ -2,7 +2,7 @@ function [im] = VerProj(inimage)
 %UNTITLED2 Summary of this function goes here
 %   Detailed explanation goes here
 im = inimage;
-%returnimage= 1-im2bw(im);
+%returnimage= 1-im2bw(im) ; 
 imshow(im)
 x = sum(im,1);
 
