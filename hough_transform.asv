@@ -1,0 +1,19 @@
+function [ output ] = hough_transform( BW_image )
+% Hough:
+%   H: Hough transform matrix
+%   Theta and Rho: Arrays of theta and rho values over which hough generates the
+%   Hough transform matrix
+%   Theta and Rho are in degrees
+% Houghpeaks:
+%   Locates peaks in H
+%   numpeaks: scalar value that specifies maxnumber of peaks to identify. I
+%   you omit numpeaks, it defaults to 1.
+% Houghlines:
+%   
+[H, theta, rho] = hough(BW);
+
+peaks = houghpeaks(H, numpeaks)
+
+lines = houghlines(BW, theta, rho)
+end
+
