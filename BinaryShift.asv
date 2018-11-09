@@ -1,0 +1,14 @@
+function [ outim ] = BinaryShift( im )
+% Function information:
+% Converts the image into an inverted binary image
+
+%find a 
+level = graythresh(im);
+
+%BW = testImage < level;
+
+BW = im2bw(im, (level+ 0.01));
+
+outim = imcomplement(BW);
+
+imshow(outim);
