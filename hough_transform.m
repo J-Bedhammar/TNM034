@@ -15,12 +15,12 @@ function [ output ] = hough_transform( BW_image )
 %   coordinates of the Hough transform bins to use in searching for line
 %   segments.
 
-[H, theta, rho] = hough(BW);
+[H, theta, rho] = hough(BW_image);
 
 imshow(H)
 
 peaks = houghpeaks(H, numpeaks);
-lines = houghlines(BW, theta, rho, peaks);
+lines = houghlines(BW_image, theta, rho, peaks);
 
 output = lines;
 
