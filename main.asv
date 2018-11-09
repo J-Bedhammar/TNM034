@@ -1,0 +1,4 @@
+%% TNM034 OMR Project
+
+% Test image
+image = imread('Image_TrainingLe_1_Example.jpg')

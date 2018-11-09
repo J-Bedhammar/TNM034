@@ -11,7 +11,7 @@ function [ strout ] = tnm034( im )
 % Quarter notes (crotchets) uppercase letters. 
 % Eight notes (quavers) lowercase letters.
 
-
+strout = 'hello';
 
 end
 
