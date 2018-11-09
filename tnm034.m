@@ -12,6 +12,7 @@ function [ strout ] = tnm034( im )
 % Eight notes (quavers) lowercase letters.
 
 OMR = im;
+BW = BinaryShift(im);
 strout = 'hello';
 
 end

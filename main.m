@@ -15,5 +15,5 @@ testImage = imread(path);
 output = tnm034(testImage);
 
 %% Show image
-imshow(testImage)
+imshow(testImage);
 
