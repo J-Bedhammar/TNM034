@@ -11,6 +11,8 @@ function [ strout ] = tnm034( im )
 % Quarter notes (crotchets) uppercase letters. 
 % Eight notes (quavers) lowercase letters.
 
+OMR = im;
+BW = BinaryShift(im);
 strout = 'hello';
 
 end
