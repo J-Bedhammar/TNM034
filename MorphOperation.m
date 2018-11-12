@@ -10,5 +10,6 @@ out2 = bwmorph(out1, 'bridge');
 %Erodes the image to make the notes smoother and increase intentional
 %holes, such as half notes
 outim = bwmorph(out2, 'erode');
+
 end
 
