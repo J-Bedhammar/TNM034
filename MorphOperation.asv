@@ -1,0 +1,4 @@
+function [outim] = MorphOperation(input)
+% Morphs the image to thin out the lines and remove 
+end
+
