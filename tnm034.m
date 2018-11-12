@@ -14,9 +14,13 @@ function [ strout ] = tnm034( im )
 OMR = im;
 BW = BinaryShift(im);
 BW1 = HorProj(BW);
-
 figure
 imshow(BW1);
+
+BW2 = MorphOperation(BW1);
+
+figure
+imshow(BW2);
 strout = 'hello';
 
 end
