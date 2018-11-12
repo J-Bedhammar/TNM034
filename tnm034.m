@@ -15,7 +15,10 @@ OMR = im;
 BW = BinaryShift(im);
 BW1 = HorProj(BW);
 
-BW2 = bwmorph(BW1, 'close', 2);
+figure
+imshow(BW1);
+
+BW2 = MorphOperation(BW1);
 
 figure
 imshow(BW2);
