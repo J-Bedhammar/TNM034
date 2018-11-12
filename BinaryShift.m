@@ -1,4 +1,6 @@
 function [ outim ] = BinaryShift( im )
+% Author: Oliver Johansson
+%
 % Function information:
 % Converts the image into an inverted binary image
 
@@ -10,7 +12,9 @@ level = graythresh(im);
 BW = imbinarize(im, (level + 0.05));
 BW = rgb2gray(im2uint8(BW));
 
-
 %inverted binary image
 outim = imcomplement(BW);
+
+
+
 

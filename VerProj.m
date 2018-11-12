@@ -3,11 +3,12 @@ function [im] = VerProj(inimage)
 %   Detailed explanation goes here
 im = inimage;
 %returnimage= 1-im2bw(im) ; 
-imshow(im)
+
 x = sum(im,1);
 
 figure
      plot(x,1:size(im,2))
+          title('Ver image')
      
 [peaks,locals] = findpeaks(x);
 maxpeak = max(peaks);
@@ -23,7 +24,5 @@ for v = locals
     im(:,v) = 0;
 end
     
-figure 
-imshow(im)
 end
 

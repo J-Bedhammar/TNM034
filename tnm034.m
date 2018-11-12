@@ -13,6 +13,15 @@ function [ strout ] = tnm034( im )
 
 OMR = im;
 BW = BinaryShift(im);
+BW1 = HorProjElimLines(BW);
+
+%använd tjocklek och mellanrum mellan raderna för att skala template
+
+figure
+imshow(BW1);
+
+%BW2 = MorphOperation(BW1);
+
 strout = 'hello';
 
 end
