@@ -15,9 +15,8 @@ peaks(removelist) = [];
 locals(removelist) = [];
 
 for v = locals
-        im(v-1,:) = 0;
-        im(v,:) = 0;
-        im(v+1,:) = 0;
+    
+    im(v,:) = 0;
 end
     
 figure 
