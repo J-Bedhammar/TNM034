@@ -10,7 +10,16 @@ level = graythresh(im);
 BW = imbinarize(im, (level + 0.05));
 BW = rgb2gray(im2uint8(BW));
 
-
 %inverted binary image
-outim = imcomplement(BW);
+invertim = imcomplement(BW);
+
+%show image
+figure();
+imshow(invertim);
+
+outim = bwmorph(invertim, 'erode', 1);
+
+figure();
+imshow(outim);
+
 
