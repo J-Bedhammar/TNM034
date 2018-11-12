@@ -15,10 +15,8 @@ OMR = im;
 BW = BinaryShift(im);
 BW1 = HorProj(BW);
 
-BW2 = bwmorph(BW1, 'close', 2);
-
 figure
-imshow(BW2);
+imshow(BW1);
 strout = 'hello';
 
 end
