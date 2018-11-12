@@ -1,4 +1,7 @@
 function [outim] = MorphOperation(input)
+% Author: Oliver Johansson
+%
+%Function information:
 % Morphs the image to fill space within the notes and make them more smoth
 
 %Dilates the image to decrease the space within the notes

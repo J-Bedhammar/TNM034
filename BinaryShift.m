@@ -1,4 +1,6 @@
 function [ outim ] = BinaryShift( im )
+% Author: Oliver Johansson
+%
 % Function information:
 % Converts the image into an inverted binary image
 
