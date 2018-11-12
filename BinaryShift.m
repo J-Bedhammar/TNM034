@@ -11,15 +11,18 @@ BW = imbinarize(im, (level + 0.05));
 BW = rgb2gray(im2uint8(BW));
 
 %inverted binary image
-invertim = imcomplement(BW);
+outim = imcomplement(BW);
 
+%figure();
+%imshow(outim);
+
+%% A method to thin out the lines to make it easier to remove them later
 %show image
-figure();
-imshow(invertim);
+%figure();
+%imshow(invertim);
 
-outim = bwmorph(invertim, 'erode', 1);
+% morphology operation to make the binary image more smooth
+%outim = bwmorph(invertim, 'erode', 1);
 
-figure();
-imshow(outim);
 
 
