@@ -1,4 +1,4 @@
-function [im] = HorProjElimLines(inimage)
+function [locals, im] = HorProjElimLines(inimage)
 % Emma Weberyd
 % deletes staff lines, only where there isn't any horizontal activity
 im = inimage;
