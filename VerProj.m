@@ -10,18 +10,22 @@ figure
      plot(x,1:size(im,2))
           title('Ver image')
      
-[peaks,locals] = findpeaks(x);
+[peaks,locals,widths] = findpeaks(x,'Annotate','extents','WidthReference','halfheight');
 maxpeak = max(peaks);
 
-threshhold = 0.8;
+threshhold = 0.4;
 removelist = peaks<=maxpeak*threshhold;
 peaks(removelist) = [];
 locals(removelist) = [];
-
+widths(removelist) = [];
 %display(peaks)
 %display(locals)
-for v = locals
-    im(:,v) = 0;
+
+for v = 1:length(locals)
+  
+    
+    temp = (locals(v)-floor(widths(v)/2)) : (locals(v) + ceil(widths(v)/2));
+    im(:,temp) = 0;
 end
     
 end
