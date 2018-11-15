@@ -4,7 +4,7 @@ function [filled, cropped] = ImageRotation( image, rotation)
 
 % NOT PRECISE! Rotation too high. 
 
-rotatedImage = imrotate(image,rotation, 'bilinear', 'crop');
+rotatedImage = imrotate(image,rotation, 'bicubic', 'crop');
 imageSize = size(rotatedImage);
 
 blackBorder = size(rotatedImage) * (1-rotation);
