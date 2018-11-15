@@ -12,16 +12,20 @@ function [ strout ] = tnm034( im )
 % Eight notes (quavers) lowercase letters.
 
 OMR = im;
-BW = BinaryShift(im);
-BW1 = HorProj(BW);
+BW = BinaryShift(OMR);
+[lines, BW1] = HorProjElimLines(BW);
+
+dist = LineDistance(lines);
+
+template = ResizeTemplate(dist);
+
+C = normxcorr2(template, BW1);
 
 figure
 imshow(BW1);
 
-BW2 = MorphOperation(BW1);
+%BW2 = MorphOperation(BW1);
 
-figure
-imshow(BW2);
 strout = 'hello';
 
 end
