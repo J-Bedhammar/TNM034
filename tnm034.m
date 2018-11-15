@@ -12,11 +12,17 @@ function [ strout ] = tnm034( im )
 % Eight notes (quavers) lowercase letters.
 
 OMR = im;
-BW = BinaryShift(im);
-BW1 = HorProjElimLines(BW);
+BW = BinaryShift(OMR);
+[lines, BW1] = HorProjElimLines(BW);
 
-%använd tjocklek och mellanrum mellan raderna för att skala template
+dist = LineDistance(lines);
 
+template = ResizeTemplate(dist);
+
+C = normxcorr2(template, BW1);
+
+figure
+imshow(C>0.5)
 figure
 imshow(BW1);
 
