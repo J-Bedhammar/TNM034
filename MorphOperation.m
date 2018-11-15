@@ -1,9 +1,18 @@
 function [outim] = MorphOperation(input)
-% Morphs the image to thin out the thickest lines and remove the rest.
+% Author: Oliver Johansson
+%
+%Function information:
+% Morphs the image to fill space within the notes and make them more smoth
 
+%Dilates the image to decrease the space within the notes
+out1 = bwmorph(input, 'dilate');
 
-outim = bwmorph(input, 'fill');
+%Fill small spaces within the notes if there are any left
+out2 = bwmorph(out1, 'bridge');
 
-% outim = bwmorph(input, 'close');
+%Erodes the image to make the notes smoother and increase intentional
+%holes, such as half notes
+outim = bwmorph(out2, 'erode');
+
 end
 

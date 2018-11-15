@@ -14,16 +14,17 @@ function [ output ] = hough_transform( BW_image )
 %   peaks: matrix returned from houghpeaks. Contains row and column
 %   coordinates of the Hough transform bins to use in searching for line
 %   segments.
+BW_
 
 [H, theta, rho] = hough(BW_image);
 
-imshow(H)
+%imshow(H)
+numpeaks = 15;
 
 peaks = houghpeaks(H, numpeaks);
 lines = houghlines(BW_image, theta, rho, peaks);
 
 output = lines;
-
 
 end
 
