@@ -18,8 +18,7 @@ for j = 1:length(staffLineArray)
         c = sort(c);
         rows = r(1):r(end);
         cols = c(1):c(end);
-        noteArray{arrayIndex} = L(rows,cols);
-        arrayIndex = arrayIndex+1; 
+        noteArray{array} = L(rows,cols);
     end
 end
 

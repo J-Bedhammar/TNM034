@@ -36,9 +36,14 @@ figure
 imshow(BW1);
 
 % get array of staff lines
-array = BW1;
+array = DivideImage(BW1, lines);
 noteArray = getNotes(array);
-
+figure
+imshow(noteArray{1});
+figure
+imshow(noteArray{2});
+figure
+imshow(noteArray{3});
 %BW2 = MorphOperation(BW1);
 
 strout = 'hello';
