@@ -10,10 +10,16 @@ for i = 1:length(lines)- 1
     end
 end
 
+[rows, cols] = size(inputimg);
 fromrow = 1;
-for i = 1: (length(lines)/5 - 1)
-    outputimg{i} = inputimg(fromrow:lines(5*i) + floor(longestdist/2), :);
+torow = rows;
+temp = 1;
+for i = 1: (length(lines)/5)
+    torow = lines(5*i) + floor(longestdist/2);
+    if(i == length(lines)/5)
+       torow = rows;
+    end
+    outputimg{i} = inputimg(fromrow:torow, :);
     fromrow = lines(5*i) + floor(longestdist/2);
-    print("hello");
 end
  
