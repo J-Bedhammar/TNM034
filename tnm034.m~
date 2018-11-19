@@ -27,8 +27,8 @@ figure
 imshow(BW1);
 
 % get array of staff lines
-array = BW1;
-noteArray = getNotes(array);
+array = {BW1};
+noteArray = getNotes({BW1});
 
 %BW2 = MorphOperation(BW1);
 
