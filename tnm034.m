@@ -13,7 +13,16 @@ function [ strout ] = tnm034( im )
 
 OMR = im;
 BW = BinaryShift(OMR);
+
 [lines, BW1] = HorProjElimLines(BW);
+temp = DivideImage(BW1,lines);
+
+length(temp)
+
+for i = 1:length(temp)
+    figure();
+    imshow(temp{i});
+end
 
 dist = LineDistance(lines);
 
