@@ -1,0 +1,14 @@
+function [outputimg] = DivideImage( inputimg, lines)
+
+
+dist = 0;
+longestdist = 0;
+for i = 1:length(lines)- 1
+    dist = lines(i+1) - lines(i);
+    if longestdist < dist
+        longestdist = dist;
+    end
+end
+
+outputimg{i} = inputimg(1:lines(5) + floor(longestdist/2), :);
+ 
