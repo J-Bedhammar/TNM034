@@ -15,9 +15,9 @@ OMR = im;
 BW = BinaryShift(OMR);
 
 [lines, BW1] = HorProjElimLines(BW);
+figure 
+imshow(BW1);
 temp = DivideImage(BW1,lines);
-
-length(temp)
 
 for i = 1:length(temp)
     figure();
@@ -28,23 +28,19 @@ dist = LineDistance(lines);
 
 template = ResizeTemplate(dist);
 
-C = normxcorr2(template, BW1);
-
-figure
-imshow(C>0.5)
-figure
-imshow(BW1);
-
 % get array of staff lines
 array = DivideImage(BW1, lines);
-noteArray = getNotes(array);
+[noteArray,reImage] = getNotes(array);
+
 figure
-imshow(noteArray{1});
+imshow(reImage/41);
+title("this");
+
+C = normxcorr2(template, reImage);
+
 figure
-imshow(noteArray{2});
-figure
-imshow(noteArray{3});
-%BW2 = MorphOperation(BW1);
+imshow((C>0.5))
+
 
 strout = 'hello';
 
