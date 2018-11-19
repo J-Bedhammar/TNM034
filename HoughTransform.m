@@ -1,4 +1,4 @@
-function [ rotation ] = hough_transform( im, BW_image )
+function [ rotation ] = HoughTransform( im, BW )
 % Authors: Jennifer Bedhammar
 % Last edit: 2018-11-12
 
@@ -19,50 +19,48 @@ function [ rotation ] = hough_transform( im, BW_image )
 %   coordinates of the Hough transform bins to use in searching for line
 %   segments.
 
-[H, theta, rho] = hough(BW_image);
+[H,theta,rho] = hough(BW);
 
-numpeaks = 4;
+numpeaks = 5;
 
 peaks  = houghpeaks(H,numpeaks,'threshold',ceil(0.6*max(H(:))));
-lines = houghlines(BW_image,theta,rho,peaks,'FillGap',5,'MinLength',7);
+lines = houghlines(BW,theta,rho,peaks,'FillGap',5,'MinLength',7);
 
+% PLOT LINES ------------------------------------------
+figure, imshow(im), hold on
+max_len = 0;
+for k = 1:length(lines)
+   xy = [lines(k).point1; lines(k).point2];
+   plot(xy(:,1),xy(:,2),'LineWidth',2,'Color','green');
+
+   % Plot beginnings and ends of lines
+   plot(xy(1,1),xy(1,2),'x','LineWidth',2,'Color','yellow');
+   plot(xy(2,1),xy(2,2),'x','LineWidth',2,'Color','red');
+
+   % Determine the endpoints of the longest line segment
+   len = norm(lines(k).point1 - lines(k).point2);
+   if ( len > max_len)
+      max_len = len;
+      xy_long = xy;
+   end
+end
+
+% SET ROTATION ANGLE ---------------------------
 maxTheta = max([lines(:).theta]);
 
 if( maxTheta == -90)
     rotation = 0;
 else
-    rotation = maxTheta/-90;
+    rotation = maxTheta/-90
 
     
 % PRINT HOUGH ----------------------------------
-%imshow(H,[],'XData',theta,'YData',rho,...
+% imshow(H,[],'XData',theta,'YData',rho,...
 %            'InitialMagnification','fit');
-%xlabel('\theta'), ylabel('\rho');
-%axis on, axis normal, hold on;
+% xlabel('\theta'), ylabel('\rho');
+% axis on, axis normal, hold on;
 % ----------------------------------------------
 
-% PRINT OUT LINES ----------------------------
-
-% figure, imshow(im), hold on
-% max_len = 0;
-% for k = 1:length(lines)
-%    xy = [lines(k).point1; lines(k).point2];
-%    plot(xy(:,1),xy(:,2),'LineWidth',2,'Color','green');
-% 
-%    % Plot beginnings and ends of lines
-%    plot(xy(1,1),xy(1,2),'x','LineWidth',2,'Color','yellow');
-%    plot(xy(2,1),xy(2,2),'x','LineWidth',2,'Color','red');
-% 
-%    % Determine the endpoints of the longest line segment
-%    len = norm(lines(k).point1 - lines(k).point2);
-%    if ( len > max_len)
-%       max_len = len;
-%       xy_long = xy;
-%    end
-% end
-
-% lines = houghlines(BW_image, theta, rho, peaks);
-% ---------------------------------------------------
 
 end
 
