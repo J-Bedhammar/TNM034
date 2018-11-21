@@ -7,7 +7,7 @@ total = 0;
 l = 0;
 while length(lines)> l
     for i = l +1:l +4
-        total = total + lines(i+1) - lines(i);
+        total = total + abs(lines(i+1) - lines(i));
     end
     l = l + 5;
 end
