@@ -33,7 +33,10 @@ figure
 imshow(reImage/41);
 title("this");
 
-C = C>0.5;
+C = C>0.4;
+
+figure
+imshow(C);
 
 D = labelTemplateImage(C, reImage);
 figure
