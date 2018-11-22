@@ -16,8 +16,6 @@ BW = BinaryShift(OMR);
 
 [lines, BW1] = HorProjElimLines(BW);
 
-temp = DivideImage(BW1,lines);
-
 dist = LineDistance(lines);
 
 template = ResizeTemplate(dist);
@@ -30,9 +28,6 @@ size(reImage)
 
 C = normxcorr2(template, reImage);
 size(C)
-
-figure
-imshow((C>0.5))
 
 figure
 imshow(reImage/41);
