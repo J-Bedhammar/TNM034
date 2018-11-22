@@ -4,9 +4,10 @@ function [ output ] = PitchLines( inputLines )
 
 % Check that input lines consists of 5 lines?
 if (mod(length(inputLines), 5) ~= 0 )
-    %nrLines = length(inputLines)
     error('Wrong number of lines')
 end
+print = 'inputLines:'
+length(inputLines)
 
 % Variables
 nrPitches = 20;                          % G1 - E4
