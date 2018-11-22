@@ -15,14 +15,6 @@ OMR = im;
 BW = BinaryShift(OMR);
 
 [lines, BW1] = HorProjElimLines(BW);
-figure 
-imshow(BW1);
-temp = DivideImage(BW1,lines);
-
-for i = 1:length(temp)
-    figure();
-    imshow(temp{i});
-end
 
 dist = LineDistance(lines);
 
@@ -32,12 +24,32 @@ template = ResizeTemplate(dist);
 array = DivideImage(BW1, lines);
 [noteArray,reImage] = getNotes(array);
 
+size(reImage)
 
 C = normxcorr2(template, reImage);
+size(C)
+
+
+dist = LineDistance(lines);
+
+template = ResizeTemplate(dist);
+
+%Get values between 1 and 0 depending on the template
+%need to get the y-value to get the pitch
+C = normxcorr2(template, reImage);
+C = C>0.2;
+figure
+imshow(C)
 
 figure
-imshow(C>0.5)
+imshow(reImage/41);
+title("this");
 
+C = C>0.5;
+
+D = labelTemplateImage(C, reImage);
+figure
+imshow(D);
 
 strout = 'hello';
 

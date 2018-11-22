@@ -16,28 +16,31 @@ BW = BinaryShift(OMR);
 
 [lines, BW1] = HorProjElimLines(BW);
 
-%figure 
-%imshow(BW1);
+dist = LineDistance(lines);
+
+template = ResizeTemplate(dist);
 
 % get array of staff lines
 array = DivideImage(BW1, lines);
 [noteArray,reImage] = getNotes(array);
 
-figure
-imshow(reImage(:,1));
-%imshow(reImage == 4);
+size(reImage)
 
-dist = LineDistance(lines);
-
-template = ResizeTemplate(dist);
-
-%Get values between 1 and 0 depending on the template
-%need to get the y-value to get the pitch
 C = normxcorr2(template, reImage);
-C = C>0.2;
-figure
-imshow(C)
+size(C)
 
+figure
+imshow(reImage/41);
+title("this");
+
+C = C>0.4;
+
+figure
+imshow(C);
+
+D = labelTemplateImage(C, reImage);
+figure
+imshow(D);
 
 strout = 'hello';
 
