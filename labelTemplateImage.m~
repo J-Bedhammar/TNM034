@@ -1,0 +1,31 @@
+function [labelTemplateImg] = labelTemplateImage(templateImage, labelImage) 
+% author: Emma Weberyd
+% takes in labeled image and an image on which template matching has been
+% performed. Outputs template matched image with labels.
+
+NUM = max(max(labelImage));
+labelTemplateImg = zeros(size(labelImage));
+
+[R,C] = size(labelImage);
+
+for i = 1:NUM
+    %noteImage = (labelImage == i); % take out single labeled note
+    %imshow(noteImage/41);
+    for r = 1:R
+        for c = 1:C
+            if (templateImage(r,c) == 1 && labelImage(r,c) == i) 
+                i
+                %labelTemplateImg(r,c) = i;
+            end
+        end
+    end
+    
+    %c = (noteImage == 1);
+    %d = (templateImage == 1)
+    %mask = intersect(noteImage == 1,templateImage == 1)
+    %labelTemplateImg(mask) = i; % label template the same as its note
+    
+end
+%noteImage(235,896)
+imshow(labelImage(1:267,700:1000)/41)
+end

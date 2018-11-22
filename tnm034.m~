@@ -15,14 +15,8 @@ OMR = im;
 BW = BinaryShift(OMR);
 
 [lines, BW1] = HorProjElimLines(BW);
-figure 
-imshow(BW1);
-temp = DivideImage(BW1,lines);
 
-for i = 1:length(temp)
-    figure();
-    imshow(temp{i});
-end
+temp = DivideImage(BW1,lines);
 
 dist = LineDistance(lines);
 
@@ -32,12 +26,23 @@ template = ResizeTemplate(dist);
 array = DivideImage(BW1, lines);
 [noteArray,reImage] = getNotes(array);
 
+size(reImage)
 
 C = normxcorr2(template, reImage);
+size(C)
 
 figure
-imshow(C>0.5)
+imshow((C>0.5))
 
+figure
+imshow(reImage/41);
+title("this");
+
+C = C>0.5;
+
+D = labelTemplateImage(C, reImage);
+figure
+imshow(D);
 
 strout = 'hello';
 
