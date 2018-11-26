@@ -13,20 +13,34 @@ function [ strout ] = tnm034( im )
 
 OMR = im;
 BW = BinaryShift(OMR);
+
 [lines, BW1] = HorProjElimLines(BW);
 
 dist = LineDistance(lines);
 
 template = ResizeTemplate(dist);
 
-C = normxcorr2(template, BW1);
+% get array of staff lines
+array = DivideImage(BW1, lines);
+[noteArray,reImage] = getNotes(array);
+
+size(reImage)
+
+C = normxcorr2(template, reImage);
+size(C)
 
 figure
-imshow(C>0.5)
-figure
-imshow(BW1);
+imshow(reImage/41);
+title("this");
 
-%BW2 = MorphOperation(BW1);
+C = C>0.4;
+
+figure
+imshow(C);
+
+D = labelTemplateImage(C, reImage);
+figure
+imshow(D);
 
 strout = 'hello';
 

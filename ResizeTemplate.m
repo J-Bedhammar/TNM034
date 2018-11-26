@@ -10,8 +10,5 @@ template = rgb2gray(template);
 
 newTemplate = imresize(template, [dist, dist * (315/144)]);
 
-figure
-imshow(newTemplate);
-
 end
 

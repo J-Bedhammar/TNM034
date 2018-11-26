@@ -4,12 +4,14 @@ function [out] = LineDistance(lines)
 %Function information:
 %calculates the mean distance between the lines
 total = 0;
-l = 0;
+nrOfGaps = 0;
+l = 1;
 while length(lines)> l
-    for i = l +1:l +4
-        total = total + lines(i+1) - lines(i);
+    for i = l :l +3
+        total = total + abs(lines(i+1) - lines(i));
+        nrOfGaps = nrOfGaps + 1;
     end
     l = l + 5;
 end
 
-out = total/(length(lines) - 1);
+out = total/(nrOfGaps);

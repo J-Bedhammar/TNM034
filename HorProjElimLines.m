@@ -18,7 +18,6 @@ locals(removelist) = [];
 [rows, cols] = size(im);
 
 for ln = 1:length(locals)
-    locals(ln)
     for pt = 1:cols
         if im(locals(ln)-2, pt) == 0 || im(locals(ln)+2, pt) == 0
             im(locals(ln)-1:locals(ln)+1,pt) = 0;

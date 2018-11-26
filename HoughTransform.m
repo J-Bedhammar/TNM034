@@ -1,4 +1,4 @@
-function [ rotation ] = HoughTransform( im, BW )
+function [ rotation, lines ] = HoughTransform( im )
 % Authors: Jennifer Bedhammar
 % Last edit: 2018-11-12
 
@@ -19,11 +19,22 @@ function [ rotation ] = HoughTransform( im, BW )
 %   coordinates of the Hough transform bins to use in searching for line
 %   segments.
 
+% PRE_PROCESSING --------------------------------------------
+% Create binary image with spec. threshold for max information
+BW = imbinarize(im, 0.9);
+BW = rgb2gray(im2uint8(BW));
+BW = imcomplement(BW);
+
+% Dilate to improve line detection
+SE = strel('line', 2, 15);
+BW = imdilate(BW, SE);
+
+% HOUGH -------------------------------------------------------
 [H,theta,rho] = hough(BW);
 
-numpeaks = 5;
+numpeaks = 10;
 
-peaks  = houghpeaks(H,numpeaks,'threshold',ceil(0.6*max(H(:))));
+peaks  = houghpeaks(H,numpeaks,'threshold',ceil(0.3*max(H(:))));
 lines = houghlines(BW,theta,rho,peaks,'FillGap',5,'MinLength',7);
 
 % PLOT LINES ------------------------------------------
@@ -42,16 +53,20 @@ for k = 1:length(lines)
    if ( len > max_len)
       max_len = len;
       xy_long = xy;
+      indexLongest = k;
    end
 end
 
-% SET ROTATION ANGLE ---------------------------
-maxTheta = max([lines(:).theta]);
+plot(xy_long(:,1),xy_long(:,2),'LineWidth',2,'Color','red');
 
-if( maxTheta == -90)
+
+% SET ROTATION ANGLE ---------------------------
+rotationAngle = lines(indexLongest).theta;
+
+if( rotationAngle == -90)
     rotation = 0;
 else
-    rotation = maxTheta/-90
+    rotation = rotationAngle/-90;
 
     
 % PRINT HOUGH ----------------------------------
