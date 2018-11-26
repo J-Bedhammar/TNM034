@@ -1,4 +1,4 @@
-function [ rotation, lines ] = HoughTransform( im )
+function [ rotation ] = HoughTransform( im )
 % Authors: Jennifer Bedhammar
 % Last edit: 2018-11-12
 

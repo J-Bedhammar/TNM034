@@ -5,10 +5,11 @@
 
 %% Clear all, clc
 clear all;
+close all;
 clc;
 
 %% Load testimage
-path = fullfile('Images_Training', 'Le_1_Example.jpg');
+path = fullfile('Images_Training', 'im13s.jpg'); % 3,5
 testImage = imread(path);
 
 %% Call function
