@@ -23,7 +23,7 @@ BW = BinaryShift(im);
 %[lines, BW1] = HorProjElimLines(BW);
 [im,staffs]=HorProj(BW,0); %set 0 = 1 to display
 BW1 = im;
-lines = staffs;
+lines = staffs
 
 
 % Get distance between lines i.e. height of noteheads
@@ -68,8 +68,8 @@ labeledNoteHeads = labelTemplateImage(noteHeadImg, labeledImg);
 figure
 imshow(labeledNoteHeads/nrOfNotes);
 
-
-strout = 'hello';
+pitchlines = PitchLines(lines);
+strout = GetPitch((labeledNoteHeads == 4),pitchlines );
 
 end
 
