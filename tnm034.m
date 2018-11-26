@@ -38,11 +38,19 @@ imshow(labeledImg/nrOfNotes);
 title("this");
 
 % Get image with only noteheads
-noteHeadImg = normxcorr2(template, labeledImg) > 0.5;
+noteHeadImg = normxcorr2(template, labeledImg) > 0.45;
 
-% Display image with noteheads
+% Find noteheads by opening with disk
+noteHeadImg2 = findNotes(BW1, noteHeadHeight);
+
+% Display images of noteheads
 figure
+subplot(2,1,1)
+imshow(noteHeadImg2);
+title('noteheads from opening with disk element');
+subplot(2,1,2)
 imshow(noteHeadImg);
+title('noteheads from template matching');
 
 % label the noteheads
 labeledNoteHeads = labelTemplateImage(noteHeadImg, labeledImg);
@@ -50,6 +58,7 @@ labeledNoteHeads = labelTemplateImage(noteHeadImg, labeledImg);
 % Display image with labeled noteheads
 figure
 imshow(labeledNoteHeads/nrOfNotes);
+
 
 strout = 'hello';
 
