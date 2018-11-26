@@ -7,10 +7,11 @@ function [ outim ] = BinaryShift( im )
 %find a threshold
 level = graythresh(im);
 
+BW = rgb2gray(im2uint8(im));
 %create a binary image
 %if imbinarize doesn't work use im2bw
-BW = imbinarize(im, (level + 0.05));
-BW = rgb2gray(im2uint8(BW));
+BW = imbinarize(BW, (level + 0.05));
+
 
 %inverted binary image
 outim = imcomplement(BW);

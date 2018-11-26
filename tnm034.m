@@ -11,33 +11,45 @@ function [ strout ] = tnm034( im )
 % Quarter notes (crotchets) uppercase letters. 
 % Eight notes (quavers) lowercase letters.
 
-OMR = im;
-BW = BinaryShift(OMR);
+% Convert image to binary and invert
+BW = BinaryShift(im);
 
+% Eliminate horizontal lines
 [lines, BW1] = HorProjElimLines(BW);
 
-dist = LineDistance(lines);
+% Get distance between lines i.e. height of noteheads
+noteHeadHeight = LineDistance(lines);
 
-template = ResizeTemplate(dist);
+% Scale notehead template 
+template = ResizeTemplate(noteHeadHeight);
 
-% get array of staff lines
+% Divide sheet to get array of staff lines
 array = DivideImage(BW1, lines);
-[noteArray,reImage] = getNotes(array);
 
-size(reImage)
+% Label the notes and get array of cut out notes in order
+[noteArray,labeledImg] = getNotes(array);
 
-C = normxcorr2(template, reImage);
-size(C)
+% Get number of notes
+nrOfNotes = size(noteArray, 2);
 
+% Display labeled image
 figure
-imshow(reImage/41);
+imshow(labeledImg/nrOfNotes);
 title("this");
 
-C = C>0.5;
+% Get image with only noteheads
+noteHeadImg = normxcorr2(template, labeledImg) > 0.5;
 
-D = labelTemplateImage(C, reImage);
+% Display image with noteheads
 figure
-imshow(D);
+imshow(noteHeadImg);
+
+% label the noteheads
+labeledNoteHeads = labelTemplateImage(noteHeadImg, labeledImg);
+
+% Display image with labeled noteheads
+figure
+imshow(labeledNoteHeads/nrOfNotes);
 
 strout = 'hello';
 
