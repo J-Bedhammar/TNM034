@@ -11,7 +11,12 @@ Centroid = cell2mat(Centroid);
 
 % Get the closest stemrow
 neardist = 10000;
+
+pitchlines(1,10)
+Centroid
 for i = 1 : length(pitchlines(:,10))
+i
+
     temp = abs(Centroid(2) - pitchlines(i,10));
     if temp < neardist
         row = i;
