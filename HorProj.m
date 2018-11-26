@@ -1,4 +1,4 @@
-function [im,staffs] = HorProj(ininimage)
+function [im,staffs] = HorProj(ininimage,display)
 %UNTITLED2 Summary of this function goes here
 %   Detailed explanation goes here
 %im = inimage;
@@ -23,11 +23,10 @@ end
 im = imrotate(ininimage,Bestangle,'bicubic','crop');
 x = sum(im,2);
 [peaks,locals,widths] = findpeaks(x,'Annotate','extents','WidthReference','halfheight');
-figure
-stem(peaks,locals)
+dispvals1 = [peaks,locals];
 
 
- mediandifference = median(diff(locals))
+ mediandifference = median(diff(locals));
  indToRemove = zeros(length(peaks));
 for peakInd = 1:length(peaks)-1
     % if dx<medBarW/2
@@ -42,13 +41,11 @@ for peakInd = 1:length(peaks)-1
     end
 end 
 indToRemove = logical(indToRemove);
-display(' indtoremove')
-size(indToRemove)
+
 locals(indToRemove) = [];
 peaks(indToRemove) = [];
 widths(indToRemove) = [];
-figure 
-stem(locals,peaks)
+dispvals2 = [peaks,locals];
 
 % % 
   maxpeak  = max(max(peaks));
@@ -113,9 +110,8 @@ end
 removeset = localcopy < 0;
 locals(removeset) = [];
 peaks(removeset) = [];
-figure 
-stem(locals,peaks)
-size(staffs)
+dispvals3 = [peaks,locals];
+
 
 
  staffs = zeros(size(im));
@@ -137,5 +133,17 @@ size(staffs)
             end
         end    
     end
-figure
-imshow(RGB)
+
+staffs = locals;    
+if(display == 1)
+   
+    figure
+    stem(dispvals1(:,2),dispvals1(:,1))
+    figure
+    stem(dispvals2(:,2),dispvals2(:,1))
+    figure
+    stem(dispvals3(:,2),dispvals3(:,1))
+    
+    figure
+    imshow(RGB)
+end
