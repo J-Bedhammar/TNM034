@@ -1,4 +1,4 @@
-function [str] = GetPitch(noteheads, pitchlines)
+function [str] = GetPitch(noteheads, pitchlines, notelabels)
 % Author: Oliver Johansson
 
 % Function information:
@@ -7,7 +7,7 @@ function [str] = GetPitch(noteheads, pitchlines)
 
 str = ' ';
 for i = 1: size(noteheads)
-    [L,NUM] = bwlabel(noteheads == i);
+    [L,NUM] = bwlabel(noteheads == notelabels(i));
     for j = 1:NUM 
         singleNote =(L == j);
 

@@ -1,0 +1,7 @@
+function [out] = FillBeams(img)
+% Author: Oliver Johansson
+%
+%Function information:
+%
+end
+
