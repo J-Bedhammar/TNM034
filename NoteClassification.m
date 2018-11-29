@@ -20,8 +20,8 @@ for i = 1:length(noteArray)
         relevantNotes{index} = notes{i};
         index = index + 1;
     
-        figure
-        imshow(notes{i})
+        %figure
+        %imshow(notes{i})
         
     end
     
