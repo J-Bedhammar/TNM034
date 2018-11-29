@@ -11,11 +11,20 @@ function [ strout ] = tnm034( im )
 % Quarter notes (crotchets) uppercase letters. 
 % Eight notes (quavers) lowercase letters.
 
+%rotate image
+OMR = im;
+rotation  = HoughTransform(OMR);
+OMR = ImageRotation(OMR,rotation);
+
 % Convert image to binary and invert
-BW = BinaryShift(im);
+BW = BinaryShift(OMR);
 
 % Eliminate horizontal lines
-[lines, BW1] = HorProjElimLines(BW);
+%[lines, BW1] = HorProjElimLines(BW);
+[imwithoutstaffs,staffs]=HorProj(BW,0); %set 0 = 1 to display
+BW1 = imwithoutstaffs;
+lines = staffs;
+
 
 % Get distance between lines i.e. height of noteheads
 noteHeadHeight = LineDistance(lines);
@@ -38,11 +47,19 @@ imshow(labeledImg/nrOfNotes);
 title("this");
 
 % Get image with only noteheads
-noteHeadImg = normxcorr2(template, labeledImg) > 0.5;
+noteHeadImg = normxcorr2(template, labeledImg) > 0.45;
 
-% Display image with noteheads
+% Find noteheads by opening with disk
+noteHeadImg2 = findNotes(BW1, noteHeadHeight);
+
+% Display images of noteheads
 figure
+subplot(2,1,1)
+imshow(noteHeadImg2);
+title('noteheads from opening with disk element');
+subplot(2,1,2)
 imshow(noteHeadImg);
+title('noteheads from template matching');
 
 % label the noteheads
 labeledNoteHeads = labelTemplateImage(noteHeadImg, labeledImg);
@@ -51,7 +68,12 @@ labeledNoteHeads = labelTemplateImage(noteHeadImg, labeledImg);
 figure
 imshow(labeledNoteHeads/nrOfNotes);
 
-strout = 'hello';
+pitchlines = PitchLines(lines);
+figure
+imshow(labeledNoteHeads==1)
+
+
+strout = GetPitch((labeledNoteHeads == 1),pitchlines );
 
 end
 
