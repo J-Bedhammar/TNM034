@@ -70,7 +70,7 @@ imshow(labeledNoteHeads/nrOfNotes);
 
 pitchlines = PitchLines(lines);
 figure
-
+imshow(labeledNoteHeads==1)
 
 
 strout = GetPitch((labeledNoteHeads == 1),pitchlines );
