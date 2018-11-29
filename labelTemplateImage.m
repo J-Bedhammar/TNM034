@@ -15,7 +15,7 @@ if(R ~= Rt || C ~= Ct)
     templateImage = templateImage(Rdiff/2+1:(Rt -Rdiff/2), Cdiff/2+1:(Ct -Cdiff/2));
 end
 
-labelTemplateImg = (templateImage.*labelImage)/NUM;
+labelTemplateImg = (templateImage.*labelImage);
 
 
 end
