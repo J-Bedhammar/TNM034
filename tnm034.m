@@ -17,12 +17,12 @@ rotation  = HoughTransform(OMR);
 OMR = ImageRotation(OMR,rotation);
 
 % Convert image to binary and invert
-BW = BinaryShift(im);
+BW = BinaryShift(OMR);
 
 % Eliminate horizontal lines
 %[lines, BW1] = HorProjElimLines(BW);
-[im,staffs]=HorProj(BW,0); %set 0 = 1 to display
-BW1 = im;
+[imwithoutstaffs,staffs]=HorProj(BW,0); %set 0 = 1 to display
+BW1 = imwithoutstaffs;
 lines = staffs;
 
 
@@ -71,6 +71,7 @@ imshow(labeledNoteHeads);
 pitchlines = PitchLines(lines);
 
 strout = GetPitch(labeledNoteHeads, pitchlines);
+
 
 end
 
