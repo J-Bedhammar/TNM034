@@ -66,14 +66,12 @@ labeledNoteHeads = labelTemplateImage(noteHeadImg, labeledImg);
 
 % Display image with labeled noteheads
 figure
-imshow(labeledNoteHeads/nrOfNotes);
+imshow(labeledNoteHeads);
 
 pitchlines = PitchLines(lines);
-figure
-imshow(labeledNoteHeads==1)
 
+strout = GetPitch(labeledNoteHeads, pitchlines);
 
-strout = GetPitch((labeledNoteHeads == 1),pitchlines );
 
 end
 
