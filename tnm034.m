@@ -74,7 +74,7 @@ imshow(noteHeadImg);
 title('noteheads from template matching');
 
 % label the noteheads
-labeledNoteHeads = labelTemplateImage(noteHeadImg, labeledImg);
+labeledNoteHeads = labelTemplateImage(template, labeledImg);
 
 % Display image with labeled noteheads
 figure
