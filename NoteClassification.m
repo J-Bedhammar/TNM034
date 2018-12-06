@@ -11,7 +11,7 @@ function [ clearedNoteArray, labels ] = NoteClassification( noteArray, template 
 noteHead = imresize(template,0.5);
 templateSize = size(noteHead);
 
-gClefCenter = rgb2gray(imread("templates/gclef_center.png"));
+gClefCenter = rgb2gray(imread('templates/gclef_center.png'));
 gCenterSize = size(gClefCenter);
 
 notes = noteArray;
