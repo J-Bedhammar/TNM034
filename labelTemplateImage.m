@@ -1,9 +1,10 @@
-function [labelTemplateImg] = labelTemplateImage(templateImage, labelImage) 
+function [labelTemplateImg] = labelTemplateImage(template, labelImage) 
 % author: Emma Weberyd
 % takes in labeled image and an image on which template matching has been
 % performed. Outputs template matched image with labels.
 
-NUM = max(max(labelImage));
+% Get image with only noteheads
+templateImage = normxcorr2(template, labelImage) > 0.4;
 
 [Rt,Ct] = size(templateImage);
 [R,C] = size(labelImage);
