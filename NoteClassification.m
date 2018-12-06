@@ -1,4 +1,4 @@
-function [ cell, labels ] = NoteClassification( noteArray, template )
+function [ clearedNoteArray, labels ] = NoteClassification( noteArray, template )
 % Author: Jennifer Bedhammar
 % Last edit: 2018-11-29
 % INPUTS: 
@@ -27,15 +27,17 @@ for i = 1:length(notes)
     if (noteSize(1) >= templateSize(1) && noteSize(2) >= templateSize(2) )
         match = normxcorr2(noteHead, notes{i}) > 0.65; % Find noteheads
         
+        % If gClef, skip it
         if ( noteSize(1) >= gCenterSize(1) && noteSize(2) >= gCenterSize(2) )
             gMatch = normxcorr2(gClefCenter, notes{i}) > 0.35;
             if( max(max(gMatch)) > 0)
                 continue;
             end
         end
-        if max(max(match)) > 0  % If notehead save in output arrays
+        if max(max(match)) > 0  % If notehead, save in output arrays
             relevantNotes{1,index} = notes{i};
-            labelArray(1,index) = min(max(notes{i}));
+            mostFreqLabel = nonzeros(notes{i});
+            labelArray(1,index) = mode(mode(mostFreqLabel,2));
             index = index + 1;
 %           figure
 %           imshow(notes{i})
@@ -47,7 +49,7 @@ for i = 1:length(notes)
 end
 
 % Output
-cell = relevantNotes;
+clearedNoteArray = relevantNotes;
 labels = labelArray;
 
 end
