@@ -10,7 +10,7 @@ SE = strel('rectangle', V);
 
 Beams = imopen(img,SE);
 
-out = img + Beams;
+out =  Beams;
 
 end
 
