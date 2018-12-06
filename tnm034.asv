@@ -11,39 +11,75 @@ function [ strout ] = tnm034( im )
 % Quarter notes (crotchets) uppercase letters. 
 % Eight notes (quavers) lowercase letters.
 
+%rotate image
 OMR = im;
-BW = BinaryShift(OMR);
+rotation  = HoughTransform(OMR);
+OMR = ImageRotation(OMR,rotation);
 
-[lines, BW1] = HorProjElimLines(BW);
+% Convert image to binary and invert
+BW = BinaryShift(im);
 
-%figure 
-%imshow(BW1);
+%% ---------------------TEST ---------------------
 
-% get array of staff lines
+test = sum(abs(cumsum(OMR) - 
+
+
+%% --------------------TEST ----------------------
+% Eliminate horizontal lines
+%[lines, BW1] = HorProjElimLines(BW);
+[im,staffs]=HorProj(BW,0); %set 0 = 1 to display
+BW1 = im;
+lines = staffs;
+
+
+% Get distance between lines i.e. height of noteheads
+noteHeadHeight = LineDistance(lines);
+
+% Scale notehead template 
+template = ResizeTemplate(noteHeadHeight);
+
+% Divide sheet to get array of staff lines
 array = DivideImage(BW1, lines);
-[noteArray,reImage] = getNotes(array);
 
+% Label the notes and get array of cut out notes in order
+[noteArray,labeledImg] = getNotes(array);
+
+% Get number of notes
+nrOfNotes = size(noteArray, 2);
+
+% Display labeled image
 figure
-%imshow(reImage = 40);
-imshow(noteArray{4});
+imshow(labeledImg/nrOfNotes);
+title("this");
+
+% Get image with only noteheads
+noteHeadImg = normxcorr2(template, labeledImg) > 0.45;
+
+% Find noteheads by opening with disk
+noteHeadImg2 = findNotes(BW1, noteHeadHeight);
+
+% Display images of noteheads
 figure
-imshow(noteArray{5});
+subplot(2,1,1)
+imshow(noteHeadImg2);
+title('noteheads from opening with disk element');
+subplot(2,1,2)
+imshow(noteHeadImg);
+title('noteheads from template matching');
 
-%need to clasify the notes 
+% label the noteheads
+labeledNoteHeads = labelTemplateImage(noteHeadImg, labeledImg);
 
-dist = LineDistance(lines);
-
-template = ResizeTemplate(dist);
-
-%Get values between 1 and 0 depending on the template
-%need to get the y-value to get the pitch
-C = normxcorr2(template, reImage);
-C = C >0.5;
+% Display image with labeled noteheads
 figure
-imshow((C>))
+imshow(labeledNoteHeads/nrOfNotes);
 
+pitchlines = PitchLines(lines);
 
-strout = 'hello';
+figure()
+imshow(labeledNoteHeads == 1);
+
+strout = GetPitch(labeledNoteHeads == 1, pitchlines);
 
 end
 

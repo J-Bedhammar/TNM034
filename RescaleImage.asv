@@ -1,0 +1,32 @@
+function [outImg, outDist] = RescaleImage(img, dist)
+%Author: Oliver Johansson
+
+%Function description: 
+%Resize the image
+
+%img is supposed to be the binary imag  WITH the lines. 
+%dist is the distance between the lines
+
+
+
+[rows, cols] = size(img);
+
+if dist ~= 11
+%calculates the scale to resize the image with    
+scale = 11/dist;
+
+%resize the image
+scaledImg = imresize(img, scale);
+
+%redo the horizontal projection to get the new data on the lines.
+[outImg,newlines]=HorProj(scaledImg,0);
+
+%set the new line distance
+outDist = LineDistance(newlines);
+else
+outImg = img;
+outDist = dist;
+end
+
+end
+
