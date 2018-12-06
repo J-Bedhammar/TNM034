@@ -26,9 +26,13 @@ widths(removelist) = [];
 %display(locals)
 
 for v = 1:length(locals)
-  
+    bot = locals(v) - floor(widths(v)/2);
     
-    temp = (locals(v)-floor(widths(v)/2)) : (locals(v) + ceil(widths(v)/2));
+    if(bot < 1)
+    bot = locals(v);
+    end
+    
+    temp = bot : (locals(v) + ceil(widths(v)/2));
     im(:,temp) = 0;
     RGB(:,temp, 1) = 255;
     RGB(:,temp, 2) = 0;

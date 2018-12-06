@@ -18,12 +18,15 @@ OMR = ImageRotation(OMR,rotation);
 
 % Convert image to binary and invert
 BW = BinaryShift(OMR);
+imshow(BW)
 
+beams = FillBeams(BW);
 % Eliminate horizontal lines
 %[lines, BW1] = HorProjElimLines(BW);
 [imwithoutstaffs,staffs]=HorProj(BW,0); %set 0 = 1 to display
 BW1 = imwithoutstaffs;
 lines = staffs;
+nostaffnbeams = beams + BW1;
 
 
 % Get distance between lines i.e. height of noteheads
@@ -35,8 +38,17 @@ template = ResizeTemplate(noteHeadHeight);
 % Divide sheet to get array of staff lines
 array = DivideImage(BW1, lines);
 
+
+
+
 % Label the notes and get array of cut out notes in order
 [noteArray,labeledImg] = getNotes(array);
+[rensadnote , labels] = NoteClassification(noteArray,template);
+rensadnote2  = notetype(rensadnote,labeledImg,labels,template);
+% nrofobjects = length(noteArray(1,:))
+% size(labeledImg)
+% [notetype] = LocalProj(labeledImg,template,nrofobjects);
+
 
 % Get number of notes
 nrOfNotes = size(noteArray, 2);
@@ -70,8 +82,8 @@ imshow(labeledNoteHeads);
 
 pitchlines = PitchLines(lines);
 
-strout = GetPitch(labeledNoteHeads, pitchlines);
-
+%strout = GetPitch(labeledNoteHeads, pitchlines);
+strout = "";
 
 end
 
