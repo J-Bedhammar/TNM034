@@ -16,15 +16,14 @@ relevantNotes = {};
 
 index = 1;
 
-% Go through all "notes" in noteArray
-for i = 1:length(notes)
+for i = 1:length(noteArray)
     noteSize = size(notes{i});
     
-    % If smaller than a notehead(resized) is considered irrelevant
+    % If smaller than a notehead(resized) is 
     if (noteSize(1) >= templateSize(1) && noteSize(2) >= templateSize(2) )
-        match = normxcorr2(noteHead, notes{i}) > 0.65; % Find noteheads
+        match = normxcorr2(noteHead, notes{i}) > 0.65;
         
-        if max(max(match)) > 0  % If notehead save in output arrays
+        if max(max(match)) > 0
             relevantNotes{1,index} = notes{i};
             labelArray(1,index) = min(max(notes{i}));
             index = index + 1;
@@ -37,7 +36,6 @@ for i = 1:length(notes)
     
 end
 
-% Output
 cell = relevantNotes;
 labels = labelArray;
 
