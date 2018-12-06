@@ -37,8 +37,8 @@ for i = 1:length(notes)
             relevantNotes{1,index} = notes{i};
             labelArray(1,index) = min(max(notes{i}));
             index = index + 1;
-          figure
-          imshow(notes{i})
+%           figure
+%           imshow(notes{i})
         end
         
     end
