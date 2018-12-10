@@ -25,11 +25,11 @@ beams = FillBeams(BW);
 %[lines, BW1] = HorProjElimLines(BW);
 [imwithoutstaffs,staffs]=HorProj(BW,0); %set 0 = 1 to display
 BW1 = imwithoutstaffs;
-lines = staffs
+lines = staffs;
 nostaffnbeams = beams + BW1;
 
 % Get distance between lines i.e. height of noteheads
-noteHeadHeight = LineDistance(lines)
+noteHeadHeight = LineDistance(lines);
 
 % Scale notehead template 
 template = ResizeTemplate(noteHeadHeight);
