@@ -21,16 +21,12 @@ BW = BinaryShift(OMR);
 imshow(BW)
 
 beams = FillBeams(BW);
-figure
-imshow(beams)
 % Eliminate horizontal lines
 %[lines, BW1] = HorProjElimLines(BW);
 [imwithoutstaffs,staffs]=HorProj(BW,0); %set 0 = 1 to display
 BW1 = imwithoutstaffs;
 lines = staffs;
 nostaffnbeams = beams + BW1;
-figure
-imshow(nostaffnbeams);
 
 
 % Get distance between lines i.e. height of noteheads
@@ -41,30 +37,14 @@ template = ResizeTemplate(noteHeadHeight);
 
 % Divide sheet to get array of staff lines
 array = DivideImage(BW1, lines);
-size(array)
+
 
 
 
 % Label the notes and get array of cut out notes in order
 [noteArray,labeledImg] = getNotes(array);
 [rensadnote , labels] = NoteClassification(noteArray,template);
-bw  = double(255 * labeledImg);
-RGB = cat(3, bw, bw, bw);
-
-for i = 1:length(rensadnote)
- %[ri,ci] = find(rensadnote{1,i} == noteArray{})
-        [r, c] = find(rensadnote{1,i});
-        RGB(r,c,1) =255;
-        RGB(r,c,2) =0;
-        RGB(r,c,3) =0;
-        l = floor(length(template(1,:))/4);
-        rt1  =(min(r)):(max(r));
-        ct1 = (min(c)):(max(c));
-        if(length(rt1) > 3 && length(ct1)>3)
-            noteclass = LocalProj(rensadnote{1,i},template)
-        end
-    
-end
+rensadnote2  = notetype(rensadnote,labeledImg,labels,template);
 % nrofobjects = length(noteArray(1,:))
 % size(labeledImg)
 % [notetype] = LocalProj(labeledImg,template,nrofobjects);

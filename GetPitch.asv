@@ -4,7 +4,7 @@ function [str] = GetPitch(noteheads, pitchlines)
 % Function information:
 % Connects the correct pitch to a specific note
 
-currow = 1;
+
 str = ' ';
 for i = 1: size(noteheads)
     %labeledHead = noteheads == notelabels{i}
@@ -18,19 +18,17 @@ for i = 1: size(noteheads)
         Centroid = cell2mat(Centroid);
 
         % Get the closest stemrow
+        row = 1;
         neardist = 10000;
         for n = 1 : length(pitchlines(:,10))
             temp = abs(Centroid(2) - pitchlines(n,10));
             if temp < neardist
-                row = n;
+                if n ~= row
+                    str = strcat(str,"n");
+                end
+                
                 neardist = temp;
             end
-        end
-        
-        %check if its a new row
-        if currow ~= row
-            str = strcat(str,"n");
-            currow = row;
         end
 
         % Find the closest pitch

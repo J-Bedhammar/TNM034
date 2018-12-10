@@ -28,18 +28,19 @@ BW1 = imwithoutstaffs;
 lines = staffs;
 nostaffnbeams = beams + BW1;
 
-
 % Get distance between lines i.e. height of noteheads
 noteHeadHeight = LineDistance(lines);
 
 % Scale notehead template 
 template = ResizeTemplate(noteHeadHeight);
 
+% Erase any sheet title text 
+if (staffs(1) - 4*noteHeadHeight > 0)
+    BW1 = BW1((staffs(1) - 4*noteHeadHeight):end, :);
+end
+
 % Divide sheet to get array of staff lines
 array = DivideImage(BW1, lines);
-
-
-
 
 % Label the notes and get array of cut out notes in order
 [noteArray,labeledImg] = getNotes(array);
@@ -48,7 +49,6 @@ rensadnote2  = notetype(rensadnote,labeledImg,labels,template);
 % nrofobjects = length(noteArray(1,:))
 % size(labeledImg)
 % [notetype] = LocalProj(labeledImg,template,nrofobjects);
-
 
 % Get number of notes
 nrOfNotes = size(noteArray, 2);
@@ -59,7 +59,7 @@ imshow(labeledImg/nrOfNotes);
 title("this");
 
 % Get image with only noteheads
-noteHeadImg = normxcorr2(template, labeledImg) > 0.45;
+noteHeadImg = normxcorr2(template, labeledImg) > 0.5;
 
 % Find noteheads by opening with disk
 noteHeadImg2 = findNotes(BW1, noteHeadHeight);
@@ -74,16 +74,14 @@ imshow(noteHeadImg);
 title('noteheads from template matching');
 
 % label the noteheads
-labeledNoteHeads = labelTemplateImage(noteHeadImg, labeledImg);
+labeledNoteHeads = labelTemplateImage(template, labeledImg);
 
 % Display image with labeled noteheads
-figure
-imshow(labeledNoteHeads);
+figure; imshow(labeledNoteHeads);
 
 pitchlines = PitchLines(lines);
 
-%strout = GetPitch(labeledNoteHeads, pitchlines);
-strout = "";
+strout = GetPitch(labeledNoteHeads, pitchlines);
 
 end
 
