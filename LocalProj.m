@@ -78,7 +78,6 @@ end
 
 end
 
-close all
 if(dispsetting == 1)
     figure
     imshow(im1)
