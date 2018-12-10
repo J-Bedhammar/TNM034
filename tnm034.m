@@ -18,9 +18,9 @@ OMR = ImageRotation(OMR,rotation);
 
 % Convert image to binary and invert
 BW = BinaryShift(OMR);
-imshow(BW)
 
 beams = FillBeams(BW);
+
 % Eliminate horizontal lines
 %[lines, BW1] = HorProjElimLines(BW);
 [imwithoutstaffs,staffs]=HorProj(BW,0); %set 0 = 1 to display
@@ -28,22 +28,25 @@ BW1 = imwithoutstaffs;
 lines = staffs;
 nostaffnbeams = beams + BW1;
 
-
 % Get distance between lines i.e. height of noteheads
 noteHeadHeight = LineDistance(lines);
 
+% remove gclef
+BW1 = RemoveGclef(nostaffnbeams, noteHeadHeight);
+
+figure
+imshow(BW1);
 % Scale notehead template 
 template = ResizeTemplate(noteHeadHeight);
 
 % Divide sheet to get array of staff lines
 array = DivideImage(BW1, lines);
 
-
-
-
 % Label the notes and get array of cut out notes in order
 [noteArray,labeledImg] = getNotes(array);
+
 [rensadnote , labels] = NoteClassification(noteArray,template);
+
 rensadnote2  = notetype(rensadnote,labeledImg,labels,template);
 % nrofobjects = length(noteArray(1,:))
 % size(labeledImg)
@@ -54,9 +57,9 @@ rensadnote2  = notetype(rensadnote,labeledImg,labels,template);
 nrOfNotes = size(noteArray, 2);
 
 % Display labeled image
-figure
-imshow(labeledImg/nrOfNotes);
-title("this");
+% figure
+% imshow(labeledImg/nrOfNotes);
+% title("this");
 
 % Get image with only noteheads
 noteHeadImg = normxcorr2(template, labeledImg) > 0.45;
@@ -65,25 +68,27 @@ noteHeadImg = normxcorr2(template, labeledImg) > 0.45;
 noteHeadImg2 = findNotes(BW1, noteHeadHeight);
 
 % Display images of noteheads
-figure
-subplot(2,1,1)
-imshow(noteHeadImg2);
-title('noteheads from opening with disk element');
-subplot(2,1,2)
-imshow(noteHeadImg);
-title('noteheads from template matching');
+% figure
+% subplot(2,1,1)
+% imshow(noteHeadImg2);
+% title('noteheads from opening with disk element');
+% subplot(2,1,2)
+% imshow(noteHeadImg);
+% title('noteheads from template matching');
 
 % label the noteheads
 labeledNoteHeads = labelTemplateImage(template, labeledImg);
 
+ClearNotes = ClarifyNoteHeads(labeledNoteHeads, noteHeadImg2);
+
 % Display image with labeled noteheads
-figure
-imshow(labeledNoteHeads);
+%figure
+%imshow(ClearNotes);
 
 pitchlines = PitchLines(lines);
 
-%strout = GetPitch(labeledNoteHeads, pitchlines);
-strout = "";
+strout = GetPitch(labeledNoteHeads, pitchlines);
+%strout = "";
 
 end
 
