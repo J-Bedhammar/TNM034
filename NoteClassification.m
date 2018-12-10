@@ -31,51 +31,51 @@ for i = 1:length(notes)
     if (noteSize(1) >= templateSize(1) && noteSize(2) >= templateSize(2) )
         match = normxcorr2(noteHead, notes{i}) > 0.60; % Find noteheads
         
-        % If gClef, skip it
+        % IF GCLEF SKIP -------------------------------------
+        
+        % Top -----------
         if ( noteSize(1) >= gCenterSize2(1) && noteSize(2) >= gCenterSize2(2) )
-
-            % Center of gclef
-            if ( noteSize(1) >= gCenterSize(1) && noteSize(2) >= gCenterSize(2) )
-                gMatch = normxcorr2(gClefCenter, notes{i}) > 0.35;                 
-                if( max(max(gMatch)) > 0)
-%                     figure
-%                     imshow(notes{i})
-                    continue;
-                end
-            end
-            
-            % Head of gclef
             gMatch2 = normxcorr2(gClefCenter2, notes{i}) > 0.50;
-            
-            
             if( max(max(gMatch2)) > 0)
-%                 figure
-%                 imshow(notes{i})
+                %figure
+                %imshow(notes{i})
                 continue;
             end
-
- 
         end
         
-        % Center of gclef
+        % Center ----------
+        if ( noteSize(1) >= gCenterSize(1) && noteSize(2) >= gCenterSize(2) )
+            gMatch = normxcorr2(gClefCenter, notes{i}) > 0.35;                 
+            if( max(max(gMatch)) > 0)
+                %figure
+                %imshow(notes{i})
+                continue;
+            end
+        end
+        
+        % Tail ----------
         if ( noteSize(1) >= gCenterSize3(1) && noteSize(2) >= gCenterSize3(2) )
             gMatch3 = normxcorr2(gClefCenter3, notes{i}) > 0.75;                
             if( max(max(gMatch3)) > 0)
-%                 figure
-%                 imshow(notes{i})
+                %figure
+                %imshow(notes{i})
                 continue;
             end
         end
         
+        % ------------------------------------------------
+        
+        % Check if match with notehead
         if (max(max(match)) > 0)  % If notehead, save in output arrays
            relevantNotes{1,index} = notes{i};
            mostFreqLabel = nonzeros(notes{i});
            labelArray(1,index) = mode(mode(mostFreqLabel,2));
            index = index + 1;
            
-%            figure
-%            imshow(notes{i})
+           %figure
+           %imshow(notes{i})
         end
+        
     end 
 end
     
