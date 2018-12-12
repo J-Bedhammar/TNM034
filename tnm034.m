@@ -28,28 +28,40 @@ BW1 = imwithoutstaffs;
 lines = staffs;
 nostaffnbeams = beams + BW1;
 
+
 % Get distance between lines i.e. height of noteheads
 noteHeadHeight = LineDistance(lines);
 
 % Scale notehead template 
 template = ResizeTemplate(noteHeadHeight);
-
 % Erase any sheet title text 
-if (staffs(1) - 4*noteHeadHeight > 0)
-    BW1 = BW1((staffs(1) - 4*noteHeadHeight):end, :);
+if (staffs(1) - floor(4*noteHeadHeight) > 0)
+    nostaffnbeams = nostaffnbeams((staffs(1) - floor(4*noteHeadHeight)):end, :);
 end
-
 % Divide sheet to get array of staff lines
-array = DivideImage(BW1, lines);
+array = DivideImage(nostaffnbeams, lines);
+
+
+
 
 % Label the notes and get array of cut out notes in order
 [noteArray,labeledImg] = getNotes(array);
 [rensadnote , labels] = NoteClassification(noteArray,template);
-rensadnote2  = notetype(rensadnote,labeledImg,labels,template);
+
+dist =LineDistance(lines);
+rensadnote2  = notetype(rensadnote,labeledImg,labels,template,dist);
+
 % nrofobjects = length(noteArray(1,:))
 % size(labeledImg)
 % [notetype] = LocalProj(labeledImg,template,nrofobjects);
+ notetypearray = [];
+ antalceller = cellfun('length' , rensadnote2(2,:));
+% mysum = sum(antalceller);
+ antalceller = length(antalceller);
+ for c = 1: antalceller
 
+     notetypearray = [notetypearray ;rensadnote2{2,c}];
+ end
 % Get number of notes
 nrOfNotes = size(noteArray, 2);
 
@@ -59,10 +71,10 @@ imshow(labeledImg/nrOfNotes);
 title("this");
 
 % Get image with only noteheads
-noteHeadImg = normxcorr2(template, labeledImg) > 0.5;
+noteHeadImg = normxcorr2(template, labeledImg) > 0.45;
 
 % Find noteheads by opening with disk
-noteHeadImg2 = findNotes(BW1, noteHeadHeight);
+noteHeadImg2 = findNotes(nostaffnbeams, noteHeadHeight);
 
 % Display images of noteheads
 figure
@@ -77,11 +89,13 @@ title('noteheads from template matching');
 labeledNoteHeads = labelTemplateImage(template, labeledImg);
 
 % Display image with labeled noteheads
-figure; imshow(labeledNoteHeads);
+figure
+imshow(labeledNoteHeads);
 
 pitchlines = PitchLines(lines);
 
-strout = GetPitch(labeledNoteHeads, pitchlines);
+strout = GetPitch(labeledNoteHeads, pitchlines,notetypearray);
+%strout = "";
 
 end
 

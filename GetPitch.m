@@ -1,9 +1,9 @@
-function [str] = GetPitch(noteheads, pitchlines)
+function [str] = GetPitch(noteheads, pitchlines,notetype)
 % Author: Oliver Johansson
 
 % Function information:
 % Connects the correct pitch to a specific note
-
+index = 1;
 currow = 1;
 str = ' ';
 for i = 1: size(noteheads)
@@ -42,15 +42,34 @@ for i = 1: size(noteheads)
                 nearest = temp;
             end
         end
-
-        % check if it is quarter note or eight notes
         
+        
+        % check if it is quarter note or eight notes
+        % classification bussnies
+     
+
+
         % -------------------------------INSERT CODE HERE--------------------------------------------------------------------------
         pitchstring1 = ["G1" "A1" "B1" "C2" "D2" "E2" "F2" "G2" "A2" "B2" "C3" "D3" "E3" "F3" "G3" "A3" "B3" "C4" "D4" "E4"];
 
         pitchstring2 = ["g1" "a1" "b1" "c2" "d2" "e2" "f2" "g2" "a2" "b2" "c3" "d3" "e3" "f3" "g3" "a3" "b3" "c4" "d4" "e4"];
 
         str = strcat(str,pitchstring1(pitch));
+        index = index+1
+%     if(notetype(index) == 1)
+%         %8del
+%        convert = pitchstring1(pitch);
+%        str = strcat(str,convert);
+%         
+%     elseif(notetype(index) == 2)
+%         %16del
+%        convert = pitchstring2(pitch);
+%        str = strcat(str,convert);
+%     else
+%        str = strcat(str,pitchstring1(pitch));
+%    
+%     end 
+%         index = index +1;
     end
 end
 end
