@@ -17,7 +17,7 @@ x = sum(im,1);
 dispvals1=[peaks,locals];
 maxpeak = max(peaks);
 
-threshhold = 0.4;
+threshhold = 0.6;
 removelist = peaks<=maxpeak*threshhold;
 peaks(removelist) = [];
 locals(removelist) = [];

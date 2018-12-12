@@ -1,10 +1,10 @@
-function [str] = GetPitch(noteheads, pitchlines)
+function [str] = GetPitch(noteheads, pitchlines,notetype)
 % Author: Oliver Johansson
 
 % Function information:
 % Connects the correct pitch to a specific note
-
-
+notetype2 = notetype(2,:);
+currow = 1;
 str = ' ';
 for i = 1: size(noteheads)
     %labeledHead = noteheads == notelabels{i}
@@ -18,17 +18,19 @@ for i = 1: size(noteheads)
         Centroid = cell2mat(Centroid);
 
         % Get the closest stemrow
-        row = 1;
         neardist = 10000;
         for n = 1 : length(pitchlines(:,10))
             temp = abs(Centroid(2) - pitchlines(n,10));
             if temp < neardist
-                if n ~= row
-                    str = strcat(str,"n");
-                end
-                
+                row = n;
                 neardist = temp;
             end
+        end
+        
+        %check if its a new row
+        if currow ~= row
+            str = strcat(str,"n");
+            currow = row;
         end
 
         % Find the closest pitch
@@ -40,9 +42,23 @@ for i = 1: size(noteheads)
                 nearest = temp;
             end
         end
-
-        % check if it is quarter note or eight notes
         
+        
+        % check if it is quarter note or eight notes
+        % classification bussnies
+        currentlabelgroup = notetype2(1,i)
+        currnote  = currentlabelgroup(j);
+        if(currnote == 0) %4del
+%             classint(posinclass) = 0; 
+%         elseif(length(peaks) == 1) % 8del 
+%             classint(posinclass) = 1;
+%         elseif(length(peaks) ==2) % 16del
+%             classint(posinclass) = 2;
+        else
+            % ??? 
+        end
+      
+
         % -------------------------------INSERT CODE HERE--------------------------------------------------------------------------
         pitchstring1 = ["G1" "A1" "B1" "C2" "D2" "E2" "F2" "G2" "A2" "B2" "C3" "D3" "E3" "F3" "G3" "A3" "B3" "C4" "D4" "E4"];
 
