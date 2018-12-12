@@ -1,4 +1,4 @@
-function [ rotation, noteRotation ] = HoughTransform( im )
+function [ rotation ] = HoughTransform( im , rotationType )
 % Authors: Jennifer Bedhammar
 % Last edit: 2018-12-12
 
@@ -73,22 +73,21 @@ end
 
 
 % SET ROTATION ANGLE ---------------------------
-rotationAngle = lines(indexLongest).theta;
 
+% Different rotation for image vs notes
+if ( rotationType == 'image')
+    rotationAngle = lines(indexLongest).theta;
+else
+    rotationAngle = lines(indexNote).theta;
+end
+
+% Get rotation
 if( rotationAngle < 0)
     rotation = rotationAngle+90;
 else
     rotation = rotationAngle-90;
 end
-    
-% SET NOTE ANGLE ---------------------------
-rotationAngleNote = lines(indexNote).theta;
-
-if( rotationAngleNote < 0)
-    noteRotation = rotationAngleNote+90;
-else
-    noteRotation = rotationAngleNote-90;
-end
+  
     
     
 % PRINT HOUGH ----------------------------------
