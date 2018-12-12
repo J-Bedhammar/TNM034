@@ -1,7 +1,7 @@
 function [ strout ] = tnm034( im )
 % Authors: Emma Weberyd, Jennifer Bedhammar, Julius Kördel, Oliver
 % Johansson.
-% Last edit: 2018-11-09
+% Last edit: 2018-12-12
 
 % Function information:
 % Im: Input image of captured sheet music. Im should be in double format,
@@ -22,88 +22,60 @@ BW = BinaryShift(OMR);
 beams = FillBeams(BW);
 
 % Eliminate horizontal lines
-%[lines, BW1] = HorProjElimLines(BW);
 [imwithoutstaffs,staffs]=HorProj(BW,0); %set 0 = 1 to display
 BW1 = imwithoutstaffs;
 lines = staffs;
 nostaffnbeams = beams + BW1;
 
-
 % Get distance between lines i.e. height of noteheads
 noteHeadHeight = LineDistance(lines);
 
 % remove gclef
-nostaffnbeams = RemoveGclef(nostaffnbeams, noteHeadHeight);
+noGclefNotes = RemoveGclef(nostaffnbeams, noteHeadHeight);
 
-figure
-imshow(nostaffnbeams);
 % Scale notehead template 
 template = ResizeTemplate(noteHeadHeight);
+
 % Erase any sheet title text 
 if (staffs(1) - floor(4*noteHeadHeight) > 0)
-    nostaffnbeams = nostaffnbeams((staffs(1) - floor(4*noteHeadHeight)):end, :);
+    noGclefNotes = noGclefNotes((staffs(1) - floor(4*noteHeadHeight)):end, :);
 end
+
 % Divide sheet to get array of staff lines
-array = DivideImage(nostaffnbeams, lines);
-
-
-
+array = DivideImage(noGclefNotes, lines);
 
 % Label the notes and get array of cut out notes in order
 [noteArray,labeledImg] = getNotes(array);
-
 [rensadnote , labels] = NoteClassification(noteArray,template);
 
-dist =LineDistance(lines);
-rensadnote2  = notetype(rensadnote,labeledImg,labels,template,dist);
+% Classify notes
+rensadnote2  = notetype(rensadnote,labeledImg,labels,template,noteHeadHeight);
 
-% nrofobjects = length(noteArray(1,:))
-% size(labeledImg)
-% [notetype] = LocalProj(labeledImg,template,nrofobjects);
- notetypearray = [];
- antalceller = cellfun('length' , rensadnote2(2,:));
+notetypearray = [];
+antalceller = cellfun('length' , rensadnote2(2,:));
 % mysum = sum(antalceller);
- antalceller = length(antalceller);
+antalceller = length(antalceller);
  for c = 1: antalceller
 
      notetypearray = [notetypearray ;rensadnote2{2,c}];
  end
-% Get number of notes
-nrOfNotes = size(noteArray, 2);
-
-% Display labeled image
-% figure
-% imshow(labeledImg/nrOfNotes);
-% title("this");
-
-% Get image with only noteheads
-noteHeadImg = normxcorr2(template, labeledImg) > 0.45;
 
 % Find noteheads by opening with disk
 noteHeadImg2 = findNotes(nostaffnbeams, noteHeadHeight);
 
-% Display images of noteheads
-% figure
-% subplot(2,1,1)
-% imshow(noteHeadImg2);
-% title('noteheads from opening with disk element');
-% subplot(2,1,2)
-% imshow(noteHeadImg);
-% title('noteheads from template matching');
-
-% label the noteheads
+% Label the noteheads
 labeledNoteHeads = labelTemplateImage(template, labeledImg);
 
-% Display image with labeled noteheads
-figure
-imshow(labeledNoteHeads);
+
+%Clarify the noteheads
 ClearNotes = ClarifyNoteHeads(labeledNoteHeads, noteHeadImg2);
 
-
+%Find all possible pitches
 pitchlines = PitchLines(lines);
 
-strout = GetPitch(labeledNoteHeads, pitchlines,notetypearray);
-%strout = "";
+%find corresponding pitch to note and print out
+strout = GetPitch(ClearNotes, pitchlines,notetypearray);
+
 
 end
 
