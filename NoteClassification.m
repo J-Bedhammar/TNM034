@@ -30,7 +30,7 @@ for i = 1:length(notes)
            mostFreqLabel = nonzeros(notes{i});
            labelArray(1,index) = mode(mode(mostFreqLabel,2));
            index = index + 1;
-           
+
 %            figure
 %            imshow(notes{i})
         end
