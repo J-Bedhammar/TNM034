@@ -61,10 +61,11 @@ for k = 1:length(lines)
         xy_long = xy;
         indexLongest = k;
         
-        
+        % Rotation for notes/beams
         if( abs(lines(k).theta) > 15)
             indexNote = k;
         end
+        
     end
 end
 
@@ -78,16 +79,16 @@ if( rotationAngle < 0)
     rotation = rotationAngle+90;
 else
     rotation = rotationAngle-90;
-
+end
     
 % SET NOTE ANGLE ---------------------------
 rotationAngleNote = lines(indexNote).theta;
 
 if( rotationAngleNote < 0)
-    rotation = rotationAngleNote+90;
+    noteRotation = rotationAngleNote+90;
 else
-    rotation = rotationAngleNote-90;
-    
+    noteRotation = rotationAngleNote-90;
+end
     
     
 % PRINT HOUGH ----------------------------------
