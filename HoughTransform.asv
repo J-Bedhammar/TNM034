@@ -1,6 +1,6 @@
 function [ rotation ] = HoughTransform( im )
 % Authors: Jennifer Bedhammar
-% Last edit: 2018-12-12
+% Last edit: 2018-11-12
 
 % Function information:
 % Hough:
@@ -21,14 +21,9 @@ function [ rotation ] = HoughTransform( im )
 
 % PRE_PROCESSING --------------------------------------------
 % Create binary image with spec. threshold for max information
-BW = im;
-
-if ( size(im,3) == 3 )
-    BW = imbinarize(im, 0.9);
-    BW = rgb2gray(im2uint8(BW));
-    BW = imcomplement(BW);
-end
-
+BW = imbinarize(im, 0.9);
+BW = rgb2gray(im2uint8(BW));
+BW = imcomplement(BW);
 
 % Dilate to improve line detection
 SE = strel('line', 2, 15);
@@ -67,11 +62,12 @@ end
 
 % SET ROTATION ANGLE ---------------------------
 rotationAngle = lines(indexLongest).theta;
-
-if( rotationAngle < 0)
-    rotation = rotationAngle+90;
-else
+% 
+% if( rotationAngle == -90)
+%     rotation = 0;
+if( rotationAngle <= 0 )
     rotation = rotationAngle-90;
+else 
 
     
 % PRINT HOUGH ----------------------------------
