@@ -10,8 +10,7 @@ for index = 1 : length(verlines)
         else
             distbetweenverlines = abs(previousline-verlines(index));
             if(distbetweenverlines < (notewidth*0.8))
-                removelines(index) = 1;
-            
+                removelines(index) = 1;       
             else
                 previousline = verlines(index); 
             end

@@ -33,10 +33,10 @@ nostaffnbeams = beams + BW1;
 noteHeadHeight = LineDistance(lines);
 
 % remove gclef
-BW1 = RemoveGclef(nostaffnbeams, noteHeadHeight);
+nostaffnbeams = RemoveGclef(nostaffnbeams, noteHeadHeight);
 
 figure
-imshow(BW1);
+imshow(nostaffnbeams);
 % Scale notehead template 
 template = ResizeTemplate(noteHeadHeight);
 % Erase any sheet title text 

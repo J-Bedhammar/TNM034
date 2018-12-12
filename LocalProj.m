@@ -1,8 +1,14 @@
 function [classint] = LocalProj(labledim,notetemp,dispsetting,dist)
 % returns a int , 0 = 4takt, 1 = 8takt o 2 = 16takt
 %kan vara värt o ta bort noter innan man kollar på denna bild
-notewidth = length(notetemp(1,:));
 inim = labledim;
+% rotation  = HoughTransform(labledim);
+% labledim = ImageRotation(labledim,rotation);
+
+
+notewidth = length(notetemp(1,:));
+
+
 [pos] =findNoteHeadCentroid(labledim);
 % % 1 = y led i bild och 2 = yled i bild
 % 
