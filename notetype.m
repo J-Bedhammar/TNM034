@@ -15,7 +15,7 @@ for i = 1:length(rensadnote)
          rt1  =(min(ri)-l):(max(ri)+l);
          ct1 = (min(ci)-l):(max(ci)+l);
         if(length(rt1) > 3 && length(ct1)>3)
-            noteclass = LocalProj(rensadnote{1,i},template,0,dist);
+            noteclass = LocalProj(rensadnote{1,i},template,1,dist);
             rensadnote{2,i} = noteclass;
         end
     
