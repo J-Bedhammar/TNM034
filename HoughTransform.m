@@ -77,7 +77,7 @@ end
 % Different rotation for image vs notes
 if ( rotationType == 'image')
     rotationAngle = lines(indexLongest).theta;
-else
+elseif ( rotationType == 'notes' )
     if(indexNote)                               
         rotationAngle = lines(indexNote).theta;
     else
