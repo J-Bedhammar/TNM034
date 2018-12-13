@@ -39,8 +39,8 @@ template = ResizeTemplate(noteHeadHeight);
 
 % Erase any sheet title text 
 if (staffs(1) - floor(4*noteHeadHeight) > 0)
-    noGclefNotes = noGclefNotes((staffs(1) - floor(4*noteHeadHeight)):end, :);
-    noGclefNotesstaff = noGclefNotesstaff((staffs(1) - floor(4*noteHeadHeight)):end, :);
+    noGclefNotes(1:(staffs(1) - floor(4*noteHeadHeight)), :) = 0;
+    noGclefNotesstaff(1:(staffs(1) - floor(4*noteHeadHeight)), :) = 0;
 end
 
 % Divide sheet to get array of staff lines
@@ -62,8 +62,6 @@ noteHeadImg2 = findNotes(noGclefNotes, noteHeadHeight);
 % Label the noteheads
 labeledNoteHeads = labelTemplateImage(template, labeledImg);
 
-size(labeledNoteHeads)
-size(noteHeadImg2)
 %Clarify the noteheads
 ClearNotes = ClarifyNoteHeads(labeledNoteHeads, noteHeadImg2);
 
