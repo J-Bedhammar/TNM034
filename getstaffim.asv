@@ -7,9 +7,15 @@ testvar = testvar(testvar >0);
 if(size(testvar) > 5 )
     rotation  = HoughTransform(labledim,'notes');
     staffim = ImageRotation(labledim , rotation);
-   
+    if(rotation < 30 && rotation > -30)
+        Irot = imrotate(labledim,rotation);
+        Mrot = ~imrotate(true(size(labledim)),rotation);
+        Irot(Mrot&~imclearborder(Mrot)) = 0;
+        staffim = Irot;
+    end
 else
-    staffim = labledim;
+     staffim = labledim;
 end
+
 end
 

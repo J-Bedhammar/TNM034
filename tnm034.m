@@ -13,7 +13,7 @@ function [ strout ] = tnm034( im )
 
 %rotate image
 OMR = im;
-rotation  = HoughTransform(OMR);
+rotation  = HoughTransform(OMR,'image');
 OMR = ImageRotation(OMR,rotation);
 
 % Convert image to binary and invert
