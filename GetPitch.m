@@ -5,16 +5,27 @@ function [str] = GetPitch(noteheads, pitchlines,notetype)
 % Connects the correct pitch to a specific note
 currow = 1;
 str = ' ';
-index = 1;
 for i = 1: size(noteheads)
     [L,NUM] = bwlabel(noteheads == i);
     if NUM ~= 0
+        index = 0;
+        notfound = 1;
+        while notfound && index < length(notetype(1,:))
+           index = index + 1; 
+           mostFreqLabel = nonzeros(notetype{1,index});
+           label = mode(mode(mostFreqLabel,2));
+           if label == i
+               notfound = 0;
+           end
+        end
         typeofnote = cell2mat(notetype(2,index));
-        index = index + 1;
     end
-    for j = 1:NUM 
+    for j = 1:NUM
         singleNote =(L == j);
 
+        if NUM ~= size(typeofnote)
+            typeofnote(1:NUM) = typeofnote(j);
+        end
         % Find the centroid in the notehead
         Centroid = regionprops(singleNote, 'Centroid');
         Centroid = struct2cell(Centroid);
@@ -50,11 +61,11 @@ for i = 1: size(noteheads)
         pitchstring1 = ["G1" "A1" "B1" "C2" "D2" "E2" "F2" "G2" "A2" "B2" "C3" "D3" "E3" "F3" "G3" "A3" "B3" "C4" "D4" "E4"];
         pitchstring2 = ["g1" "a1" "b1" "c2" "d2" "e2" "f2" "g2" "a2" "b2" "c3" "d3" "e3" "f3" "g3" "a3" "b3" "c4" "d4" "e4"];
         
-        if typeofnote(1,j) == 0
+        if typeofnote(j) == 0
             str = strcat(str,pitchstring1(pitch));
-        elseif typeofnote(1,j) == 1
+        elseif typeofnote(j) == 1
             str = strcat(str,pitchstring2(pitch));
-        elseif typeofnote(1,j) < 1
+        elseif typeofnote(j) > 1
             %sixteenth note, nothing happens
         else
             str = strcat(str,pitchstring1(pitch));
