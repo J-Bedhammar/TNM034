@@ -1,0 +1,20 @@
+function [staffim] = getstaffim(labledim)
+%UNTITLED2 Summary of this function goes here
+%   Detailed explanation goes here
+
+testvar = labledim;
+testvar = testvar(testvar >0);
+if(size(testvar) > 5 )
+    rotation  = HoughTransform(labledim);
+    if(rotation < 30 && rotation > -30)
+        Irot = imrotate(labledim,rotation);
+        Mrot = ~imrotate(true(size(labledim)),rotation);
+        Irot(Mrot&~imclearborder(Mrot)) = 0;
+        staffim = Irot;
+    end
+else
+     staffim = labledim;
+end
+
+end
+
