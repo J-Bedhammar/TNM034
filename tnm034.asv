@@ -51,10 +51,10 @@ array = DivideImage(noGclefNotes, lines);
 % Classify notes
 rensadnote2  = notetype(rensadnote,labeledImg,labels,template,noteHeadHeight);
 
-notetypearray = [];
-antalceller = cellfun('length' , rensadnote2(2,:));
+%notetypearray = [];
+%antalceller = cellfun('length' , rensadnote2(2,:));
 % mysum = sum(antalceller);
-antalceller = length(antalceller);
+%antalceller = length(antalceller);
  for c = 1: antalceller
 
      notetypearray = [notetypearray ;rensadnote2{2,c}];
