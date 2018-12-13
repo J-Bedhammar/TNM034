@@ -8,7 +8,7 @@ function [ clearedNoteArray, labels ] = NoteClassification( noteArray, template 
 % Goes through all notes and clears out irrelevant signs and letters.
 % OUTPUT: cell array of relevant notes and an array of their labels.
 
-noteHead = imresize(template,0.55);
+noteHead = imresize(template,0.5);
 templateSize = size(noteHead);
 
 notes = noteArray;
@@ -31,8 +31,8 @@ for i = 1:length(notes)
            labelArray(1,index) = mode(mode(mostFreqLabel,2));
            index = index + 1;
 
-%            figure
-%            imshow(notes{i})
+           figure
+           imshow(notes{i})
         end
         
     end 
