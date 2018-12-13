@@ -19,19 +19,21 @@ OMR = ImageRotation(OMR,rotation);
 % Convert image to binary and invert
 BW = BinaryShift(OMR);
 
-beams = FillBeams(BW);
-
 % Eliminate horizontal lines
 [imwithoutstaffs,staffs]=HorProj(BW,0); %set 0 = 1 to display
 BW1 = imwithoutstaffs;
 lines = staffs;
+
+beams = FillBeams(BW);
+
 nostaffnbeams = beams + BW1;
+nobeams = BW1 - beams;
 
 % Get distance between lines i.e. height of noteheads
 noteHeadHeight = LineDistance(lines);
 
 % remove gclef
-noGclefNotes = RemoveGclef(BW1, noteHeadHeight);
+noGclefNotes = RemoveGclef(nobeams, noteHeadHeight);
 noGclefNotesstaff = RemoveGclef(nostaffnbeams, noteHeadHeight);
 
 % Scale notehead template 
@@ -46,17 +48,26 @@ end
 % Divide sheet to get array of staff lines
 array = DivideImage(noGclefNotes, lines);
 
+
 % Label the notes and get array of cut out notes in order
-[noteArray,labeledImg] = getNotes(array);
-[rensadnote , labels] = NoteClassification(noteArray,template);
+[noteArray, labeledImg] = getNotes(array);
+[rensadnote, labels] = NoteClassification(noteArray,template);
+
+%DET FÖRSVINNER VISSA NOTHUVUDEN
+
+for k=1:length(noteArray)
+    lab = labeledImg == k;
+    lab = lab.*k;
+    iskept = ismember(k, labels);
+    if iskept == 0
+        labeledImg = labeledImg - lab;
+    end
+end
 
 % Classify notes
 rensadnote2  = notetype(rensadnote,labeledImg,labels,template,noteHeadHeight,noGclefNotesstaff);
 
-
 % Find noteheads by opening with disk
-
-
 noteHeadImg2 = findNotes(noGclefNotes, noteHeadHeight);
 
 % Label the noteheads

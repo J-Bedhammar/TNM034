@@ -4,7 +4,11 @@ function [labelTemplateImg] = labelTemplateImage(template, labelImage)
 % performed. Outputs template matched image with labels.
 
 % Get image with only noteheads
-templateImage = normxcorr2(template, labelImage) > 0.4;
+noteHead = imresize(template,0.7);
+templateImage = normxcorr2(noteHead, labelImage) > 0.6;
+
+figure
+imshow(templateImage);
 
 [Rt,Ct] = size(templateImage);
 [R,C] = size(labelImage);
