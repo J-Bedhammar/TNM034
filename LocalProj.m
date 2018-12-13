@@ -1,4 +1,4 @@
-function [classint] = LocalProj(labledim,notetemp,dispsetting,dist)
+function [classint] = LocalProj(labledim,notetemp,dispsetting,dist,noGclefNotesstaff)
 % returns a int , 0 = 4takt, 1 = 8takt o 2 = 16takt
 %kan vara värt o ta bort noter innan man kollar på denna bild
 inim = labledim;
@@ -53,7 +53,7 @@ if(v == verlines(end) && v ~= verlines(1))
     localrgb1(x1:x2,verbot:v,1) = 0;
     localrgb1(x1:x2,verbot:v,2) = 255;
     localrgb1(x1:x2,verbot:v,3) = 0;
-    [staffim] = getstaffim(labledim(x1:x2,verbot:v));
+    [staffim] = getstaffim(noGclefNotesstaff(x1:x2,verbot:v));
 
     localedge = sum(staffim,2);
     [peaks,locals] = findpeaks(localedge);
@@ -68,7 +68,7 @@ else
     localrgb1(x1:x2,v:(vertop),2) = 255;
     localrgb1(x1:x2,v:(vertop),3) = 0;    
     
-    [staffim] = getstaffim(labledim(x1:x2,v:(vertop)));
+    [staffim] = getstaffim(noGclefNotesstaff(x1:x2,v:(vertop)));
     localedge = sum(staffim,2);
  
     [peaks,locals] = findpeaks(localedge);
@@ -101,12 +101,12 @@ if(length(classint) > 2)
             if(i == 1 && classint(i+1) ~= 4)
                 classint(i) = classint(i+1);
             elseif(i == length(classint) && classint(i-1) ~=4)
-                classint(i) = classint(i-1)
+                classint(i) = classint(i-1);
             else
                 if( i ~= length(classint) && classint(i+1) == classint(i-1) )
-                    classint(i) = classint(i-1)
+                    classint(i) = classint(i-1);
                 else
-                    classint(i) = classint(i)
+                    classint(i) = classint(i);
                 end
             end
         end

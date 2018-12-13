@@ -15,7 +15,7 @@ for i = 1:length(rensadnote)
          rt1  =(min(ri)):(max(ri));
          ct1 = (min(ci)):(max(ci));
         if(length(rt1) > 3 && length(ct1)>3)
-            noteclass = LocalProj(rensadnote{1,i},template,1,dist,noGclefNotesstaff(rt1,ct1));
+            noteclass = LocalProj(rensadnote{1,i},template,0,dist,no);
             rensadnote{2,i} = noteclass;
         end
     

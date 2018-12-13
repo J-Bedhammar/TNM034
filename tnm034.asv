@@ -31,8 +31,7 @@ nostaffnbeams = beams + BW1;
 noteHeadHeight = LineDistance(lines);
 
 % remove gclef
-noGclefNotes = RemoveGclef(BW1, noteHeadHeight);
-noGclefNotesstaff = RemoveGclef(nostaffnbeams, noteHeadHeight);
+noGclefNotes = RemoveGclef(nostaffnbeams, noteHeadHeight);
 
 % Scale notehead template 
 template = ResizeTemplate(noteHeadHeight);
@@ -40,7 +39,6 @@ template = ResizeTemplate(noteHeadHeight);
 % Erase any sheet title text 
 if (staffs(1) - floor(4*noteHeadHeight) > 0)
     noGclefNotes = noGclefNotes((staffs(1) - floor(4*noteHeadHeight)):end, :);
-    noGclefNotesstaff = noGclefNotesstaff((staffs(1) - floor(4*noteHeadHeight)):end, :);
 end
 
 % Divide sheet to get array of staff lines
@@ -51,19 +49,24 @@ array = DivideImage(noGclefNotes, lines);
 [rensadnote , labels] = NoteClassification(noteArray,template);
 
 % Classify notes
-rensadnote2  = notetype(rensadnote,labeledImg,labels,template,noteHeadHeight,noGclefNotesstaff);
+rensadnote2  = notetype(rensadnote,labeledImg,labels,template,noteHeadHeight);
 
+%notetypearray = [];
+%antalceller = cellfun('length' , rensadnote2(2,:));
+% mysum = sum(antalceller);
+%antalceller = length(antalceller);
+ for c = 1: antalceller
+
+     notetypearray = [notetypearray ;rensadnote2{2,c}];
+ end
 
 % Find noteheads by opening with disk
-
-
-noteHeadImg2 = findNotes(noGclefNotes, noteHeadHeight);
+noteHeadImg2 = findNotes(nostaffnbeams, noteHeadHeight);
 
 % Label the noteheads
 labeledNoteHeads = labelTemplateImage(template, labeledImg);
 
-size(labeledNoteHeads)
-size(noteHeadImg2)
+
 %Clarify the noteheads
 ClearNotes = ClarifyNoteHeads(labeledNoteHeads, noteHeadImg2);
 
@@ -71,7 +74,7 @@ ClearNotes = ClarifyNoteHeads(labeledNoteHeads, noteHeadImg2);
 pitchlines = PitchLines(lines);
 
 %find corresponding pitch to note and print out
-strout = GetPitch(ClearNotes, pitchlines,rensadnote2);
+strout = GetPitch(ClearNotes, pitchlines,notetypearray);
 
 
 end
