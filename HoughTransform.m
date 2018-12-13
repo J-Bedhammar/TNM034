@@ -56,6 +56,7 @@ for k = 1:length(lines)
 
     % Determine the endpoints of the longest line segment
     len = norm(lines(k).point1 - lines(k).point2);
+    
     if ( len > max_len)
         max_len = len;
         xy_long = xy;
@@ -65,7 +66,6 @@ for k = 1:length(lines)
         if( abs(lines(k).theta) > 15)
             indexNote = k;
         end
-        
     end
 end
 
@@ -78,7 +78,11 @@ end
 if ( rotationType == 'image')
     rotationAngle = lines(indexLongest).theta;
 else
-    rotationAngle = lines(indexNote).theta;
+    if(indexNote)                               
+        rotationAngle = lines(indexNote).theta;
+    else
+        rotationAngle = 90;
+    end
 end
 
 % Get rotation
