@@ -53,6 +53,8 @@ dispvals2 = [peaks,locals];
   peaks(removelist) = [];
   locals(removelist) = [];
   widths(removelist) = [];
+  dispvals3 = [peaks,locals];
+
   medianwidth = median(widths);
 bw  = double(255 * im);
 RGB = cat(3, bw, bw, bw);
@@ -107,10 +109,11 @@ for index = 1: length(locals)-1
     end
 end
 
+
 removeset = localcopy < 0;
 locals(removeset) = [];
 peaks(removeset) = [];
-dispvals3 = [peaks,locals];
+dispvals4 = [peaks,locals];
 
 
 

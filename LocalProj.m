@@ -30,7 +30,7 @@ localrgb(:,verlines,1) = 255;
 localrgb(:,verlines,2) = 0;
 localrgb(:,verlines,3) = 0;
 
-ydim =  (size(labledim));
+ydim = (size(labledim));
 ydim= ydim(2);
 
 classint = 4*ones(length(verlines),1);
@@ -56,28 +56,46 @@ if(v == verlines(end) && v ~= verlines(1))
     [staffim] = getstaffim(noGclefNotesstaff(x1:x2,verbot:v));
 
     localedge = sum(staffim,2);
+    
     [peaks,locals] = findpeaks(localedge);
-    peaks(peaks < 3) = 0;
+    if(isempty(peaks))
+        peakedge = max(max(localedge));
+        if(peakedge >10 )
+            peaks = peakedge;
+            [x,y]=find(localedge==peakedge);
+            locals  = y;   
+        end
+     end  
+    peaks(peaks < 2) = 0;
     maxpeak = max(max(peaks));
     remove = peaks<=maxpeak*0.5;
     peaks(remove) = [];
     locals(remove) = [];
-    dispmatrix{posinclass} = [peaks,locals];    
+   % dispmatrix{posinclass} = [peaks,locals];    
 else
     localrgb1(x1:x2,v:(vertop),1) = 0;
     localrgb1(x1:x2,v:(vertop),2) = 255;
     localrgb1(x1:x2,v:(vertop),3) = 0;    
-    
+   
+   
     [staffim] = getstaffim(noGclefNotesstaff(x1:x2,v:(vertop)));
     localedge = sum(staffim,2);
  
     [peaks,locals] = findpeaks(localedge);
-     peaks(peaks < 3) = 0;
+     if(isempty(peaks))
+        peakedge = max(max(localedge));
+        if(peakedge >10 )
+            peaks = peakedge;
+            [x,y]=find(localedge==peakedge);
+            locals  = y;   
+        end
+     end 
+     peaks(peaks < 2) = 0;
      maxpeak = max(max(peaks));
      remove = peaks<=maxpeak*0.6;
      peaks(remove) = [];
      locals(remove) = [];
-     dispmatrix{posinclass} = [peaks,locals];
+  %   dispmatrix{posinclass} = [peaks locals];
 end
 %figure
 %stem(peaks,locals);
@@ -113,7 +131,6 @@ if(length(classint) > 2)
     end
 end
 end
-
 
 
 

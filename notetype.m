@@ -3,6 +3,7 @@ function [rensadnote2] = notetype(rensadnote,labeledImg,labels,template,dist,noG
 %   Detailed explanation goes here
 bw  = double(255 * labeledImg);
 RGB = cat(3, bw, bw, bw);
+
 for i = 1:length(rensadnote)
  %[ri,ci] = find(rensadnote{1,i} == noteArray{})
         [r, c] = find(rensadnote{1,i});
@@ -14,10 +15,12 @@ for i = 1:length(rensadnote)
        %  l = floor(length(template(1,:))/4);
          rt1  =(min(ri)):(max(ri));
          ct1 = (min(ci)):(max(ci));
-        if(length(rt1) > 3 && length(ct1)>3)
-            noteclass = LocalProj(rensadnote{1,i},template,0,dist,noGclefNotesstaff(rt1,ct1));
-            rensadnote{2,i} = noteclass;
-        end
+         
+             if(length(rt1) > 3 && length(ct1)>3)
+                noteclass = LocalProj(rensadnote{1,i},template,0,dist,noGclefNotesstaff(rt1,ct1));
+                rensadnote{2,i} = noteclass;
+             end
+        
     
 end
 rensadnote2 = rensadnote;
