@@ -14,7 +14,10 @@ function [noteArray, reImage] = getNotes(staffLineArray)
 arrayIndex = 1;
 
 for j = 1:length(staffLineArray)
+    
     [L,NUM] = bwlabel(staffLineArray{j});
+    L2 = zeros(size(L,1), size(L,2));
+    
     for i = 1:NUM 
         [r,c] = find(L == i);
         r = sort(r);
@@ -22,15 +25,17 @@ for j = 1:length(staffLineArray)
         rows = r(1):r(end);
         cols = c(1):c(end);
         mask = (L==i);
-        L(mask) = arrayIndex;
+        L2 = L2 + mask.*arrayIndex;
         noteArray{arrayIndex} = L(rows,cols);
         arrayIndex = arrayIndex+1; 
     end
     
     if(j==1)
-        reImage = L;
+        reImage = L2;
     else
-        reImage = [reImage; L];
+        reImage = [reImage; L2];
     end
+    
+end
 
 end
