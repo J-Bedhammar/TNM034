@@ -27,7 +27,7 @@ lines = staffs;
 beams = FillBeams(BW);
 
 nostaffnbeams = beams + BW1;
-nobeams = BW1 - beams;
+nobeams = BW1;
 
 % Get distance between lines i.e. height of noteheads
 noteHeadHeight = LineDistance(lines);
@@ -51,6 +51,8 @@ array = DivideImage(noGclefNotes, lines);
 
 % Label the notes and get array of cut out notes in order
 [noteArray, labeledImg] = getNotes(array);
+figure
+imshow(labeledImg)
 [rensadnote, labels] = NoteClassification(noteArray,template);
 
 %DET FÖRSVINNER VISSA NOTHUVUDEN
