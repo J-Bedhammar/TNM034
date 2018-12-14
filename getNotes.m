@@ -26,7 +26,7 @@ for j = 1:length(staffLineArray)
         cols = c(1):c(end);
         mask = (L==i);
         L2 = L2 + mask.*arrayIndex;
-        noteArray{arrayIndex} = L(rows,cols);
+        noteArray{arrayIndex} = mask(rows,cols)*arrayIndex;
         arrayIndex = arrayIndex+1; 
     end
     
