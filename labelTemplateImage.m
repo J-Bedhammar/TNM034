@@ -6,9 +6,9 @@ function [labelTemplateImg] = labelTemplateImage(template, labelImage)
 % Get image with only noteheads
 noteHead = imresize(template,0.7);
 templateImage = normxcorr2(noteHead, labelImage) > 0.6;
-
-figure
-imshow(templateImage);
+% 
+% figure
+% imshow(templateImage);
 
 [Rt,Ct] = size(templateImage);
 [R,C] = size(labelImage);

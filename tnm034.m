@@ -51,8 +51,7 @@ array = DivideImage(noGclefNotes, lines);
 
 % Label the notes and get array of cut out notes in order
 [noteArray, labeledImg] = getNotes(array);
-figure
-imshow(labeledImg)
+
 [rensadnote, labels] = NoteClassification(noteArray,template);
 
 %DET FÖRSVINNER VISSA NOTHUVUDEN
