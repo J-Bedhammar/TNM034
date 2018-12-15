@@ -1,6 +1,6 @@
 function [verlines] = cleanverlines(verlines,notewidth)
-%UNTITLED Summary of this function goes here
-%   Detailed explanation goes here
+% Author: Julius Kördel
+% Remove lines to close to eachother and noise. 
 previousline = 0;
 removelines = zeros(length(verlines));
 for index = 1 : length(verlines)

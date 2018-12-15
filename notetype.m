@@ -1,27 +1,25 @@
 function [rensadnote2] = notetype(rensadnote,labeledImg,labels,template,dist,noGclefNotesstaff)
-%UNTITLED Summary of this function goes here
-%   Detailed explanation goes here
-bw  = double(255 * labeledImg);
-RGB = cat(3, bw, bw, bw);
+% Author: Julius Kördel
+% This is the function that decide the notevalues for all notes. 
+% It need a images without stafflines. 1 where beams have not been added 
+%afterwards and one that beams have been added. first 1 for deciding note
+%positions and the latst 1 for decidinge its value. 
 
 for i = 1:length(rensadnote)
- %[ri,ci] = find(rensadnote{1,i} == noteArray{})
-        [r, c] = find(rensadnote{1,i});
-        [ri, ci] = find(labeledImg == labels(i));
-        
-%         RGB(r,c,1) =255;
-%         RGB(r,c,2) =0;
-%         RGB(r,c,3) =0;
-       %  l = floor(length(template(1,:))/4);
-         rt1  =(min(ri)):(max(ri));
-         ct1 = (min(ci)):(max(ci));
-         
-             if(length(rt1) > 3 && length(ct1)>3)
-                noteclass = LocalProj(rensadnote{1,i},template,0,dist,noGclefNotesstaff(rt1,ct1));
-                rensadnote{2,i} = noteclass;
-             end
-        
-    
+    [ri, ci] = find(labeledImg == labels(i));
+     rt1  =(min(ri)):(max(ri));
+     ct1 = (min(ci)):(max(ci));
+     if(length(rt1) > 3 && length(ct1)>3)
+         if(max(rt1)>length(noGclefNotesstaff(:,1)))
+            rt1(rt1 > length(noGclefNotesstaff(:,1))) = [];
+         end
+         if(max(ct1)>length(noGclefNotesstaff(1,:)) )
+            ct1(ct1 > length(noGclefNotesstaff(1,:))) = [];
+         end
+      
+        noteclass = LocalProj(rensadnote{1,i},template,0,dist,noGclefNotesstaff(rt1,ct1));
+        rensadnote{2,i} = noteclass;
+     end
 end
 rensadnote2 = rensadnote;
 end
