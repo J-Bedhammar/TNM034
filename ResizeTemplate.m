@@ -2,7 +2,7 @@ function [newTemplate] = ResizeTemplate(dist)
 % Author: Oliver Johansson
 %
 %Function information:
-%resizes the template depending on the distance between the lines
+%creates and resizes the template depending on the distance between the lines
 
 path = fullfile('templates', 'Nothuvud.png');
 template = imread(path);

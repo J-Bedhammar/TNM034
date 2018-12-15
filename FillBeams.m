@@ -2,7 +2,7 @@ function [out] = FillBeams(img)
 % Author: Oliver Johansson
 %
 %Function information:
-%Defines the beams in the image
+%Creates an image of only the beams
 
 % Få ut beams
 V = [4,20];
