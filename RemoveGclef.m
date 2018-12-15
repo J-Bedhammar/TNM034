@@ -1,5 +1,10 @@
 function [out] = RemoveGclef(img, dist)
 %Author: Oliver Johansson
+%
+%Function information:
+%Finds the horzontal position of all the g-clefs and crops the image to
+%remove them
+
 V = [10,2];
 SE = strel('rectangle', V);
 

@@ -8,6 +8,7 @@ function [ outim ] = BinaryShift( im )
 level = graythresh(im);
 
 BW = rgb2gray(im2uint8(im));
+
 %create a binary image
 %if imbinarize doesn't work use im2bw
 BW = imbinarize(BW, (level + 0.05));

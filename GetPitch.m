@@ -2,7 +2,8 @@ function [str] = GetPitch(noteheads, pitchlines,notetype)
 % Author: Oliver Johansson
 
 % Function information:
-% Connects the correct pitch to a specific note
+% Connects the correct pitch and value of all notes and prints out
+% the results
 currow = 1;
 str = ' ';
 for i = 1: size(noteheads)
